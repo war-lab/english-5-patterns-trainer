@@ -9,16 +9,38 @@ export default function Home() {
     const answers = store.getAnswers();
     return calculateStats(answers);
   });
+  const [limitMs, setLimitMs] = useState(2000);
 
   return (
     <div className="home-container">
       <h1>英語5文型トレーナー</h1>
 
       <div className="grid-menu">
-        <Link to="/sniper" className="menu-item">
+        <div className="menu-item" style={{ cursor: 'default' }}>
           <h3>🔫 スナイパーモード</h3>
-          <span>タイムアタック (2.0秒)</span>
-        </Link>
+          <div style={{ fontSize: '0.9rem', marginBottom: '8px', color: '#666', fontWeight: 'bold' }}>制限時間設定</div>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            {[2000, 4000, 6000, 8000, 10000].map(ms => (
+              <button
+                key={ms}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setLimitMs(ms);
+                }}
+                className={`time-config-btn ${limitMs === ms ? 'active' : ''}`}
+              >
+                {ms / 1000}秒
+              </button>
+            ))}
+          </div>
+          <Link
+            to="/sniper"
+            state={{ limitMs }}
+            className="start-btn"
+          >
+            スタート
+          </Link>
+        </div>
         <Link to="/parse" className="menu-item">
           <h3>🧐 解析モード</h3>
           <span>V-O-Cを判別</span>
@@ -85,7 +107,7 @@ export default function Home() {
           <p>データを読み込み中...</p>
         )}
       </div>
-    </div>
+    </div >
   );
 }
 const PATTERN_LABELS: Record<any, string> = {
