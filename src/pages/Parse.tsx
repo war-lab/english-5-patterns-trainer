@@ -19,8 +19,6 @@ export default function Parse() {
     setResult(null);
   };
 
-
-
   const handleOSel = (n: number) => setOCount(n);
   const handleCSel = (n: number) => setCCount(n);
 
@@ -58,70 +56,72 @@ export default function Parse() {
   if (!question) return <div>Loading...</div>;
 
   return (
-    <div className="parse-container" style={{ padding: '20px', textAlign: 'center' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <Link to="/">戻る</Link>
-        <span>モード: 解析</span>
+    <div className="parse-container">
+      <div className="nav-header">
+        <Link to="/" className="nav-link">← 戻る</Link>
+        <span style={{ fontWeight: 'bold', color: '#666' }}>モード: 解析</span>
       </div>
 
-      <div className="card" style={{ padding: '30px', fontSize: '1.5rem', background: '#fff', border: '1px solid #ccc', marginBottom: '20px' }}>
+      <div className="card question-card" style={{ marginBottom: '20px' }}>
         {question.sentence}
       </div>
 
       {!result ? (
-        <div>
-          <div style={{ marginBottom: '20px' }}>
-            <p>目的語 (O) の数は?</p>
-            {[0, 1, 2].map(n => (
-              <button key={n} onClick={() => handleOSel(n)}
-                style={{ ...btnStyle, background: oCount === n ? '#007bff' : '#eee', color: oCount === n ? '#fff' : '#000' }}>
-                {n}
-              </button>
-            ))}
+        <div className="card">
+          <div style={{ marginBottom: '2rem' }}>
+            <p style={{ fontWeight: 'bold', marginBottom: '1rem' }}>① 目的語 (O) の数は?</p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+              {[0, 1, 2].map(n => (
+                <button key={n} onClick={() => handleOSel(n)} className="btn"
+                  style={{ background: oCount === n ? 'var(--primary-color)' : '#eee', color: oCount === n ? '#fff' : '#333' }}>
+                  {n}
+                </button>
+              ))}
+            </div>
           </div>
 
           {oCount !== null && (
-            <div style={{ marginBottom: '20px' }}>
-              <p>補語 (C) はある?</p>
-              {[0, 1].map(n => (
-                <button key={n} onClick={() => handleCSel(n)}
-                  style={{ ...btnStyle, background: cCount === n ? '#007bff' : '#eee', color: cCount === n ? '#fff' : '#000' }}>
-                  {n === 1 ? 'はい (1)' : 'いいえ (0)'}
-                </button>
-              ))}
+            <div style={{ marginBottom: '2rem', animation: 'fadeIn 0.3s' }}>
+              <p style={{ fontWeight: 'bold', marginBottom: '1rem' }}>② 補語 (C) はある?</p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                {[0, 1].map(n => (
+                  <button key={n} onClick={() => handleCSel(n)} className="btn"
+                    style={{ background: cCount === n ? 'var(--primary-color)' : '#eee', color: cCount === n ? '#fff' : '#333' }}>
+                    {n === 1 ? 'Yes (ある)' : 'No (ない)'}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
           {oCount !== null && cCount !== null && (
-            <button onClick={checkAnswer} style={{ ...btnStyle, background: '#28a745', color: '#fff', width: '100%' }}>
-              文型を判定
+            <button onClick={checkAnswer} className="btn" style={{ background: 'var(--success-color)', width: '100%', padding: '1rem' }}>
+              文型を判定する
             </button>
           )}
         </div>
       ) : (
-        <div>
-          <div style={{
-            background: result.isCorrect ? '#d4edda' : '#f8d7da',
-            color: result.isCorrect ? '#155724' : '#721c24',
-            padding: '20px', borderRadius: '5px', marginBottom: '20px'
-          }}>
-            <h2>{result.isCorrect ? "正解!" : "不正解!"}</h2>
-            <p>あなたの回答: 第{result.pattern}文型</p>
-            <p>正解: 第{question.correctPattern}文型</p>
-            <p>解説: {result.msg}</p>
+        <div className="card" style={{ background: result.isCorrect ? '#e8f8f5' : '#fdedec', border: `2px solid ${result.isCorrect ? 'var(--success-color)' : 'var(--error-color)'}` }}>
+          <h2 style={{ color: result.isCorrect ? 'var(--success-color)' : 'var(--error-color)' }}>
+            {result.isCorrect ? "正解!" : "不正解!"}
+          </h2>
+          <div style={{ textAlign: 'left', margin: '1rem 0' }}>
+            <p><strong>あなたの回答:</strong> 第{result.pattern}文型</p>
+            <p><strong>正解:</strong> 第{question.correctPattern}文型</p>
+            <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.7)', borderRadius: '8px' }}>
+              <strong>解説:</strong> {result.msg}
+            </div>
           </div>
-          <button onClick={loadNext} style={{ ...btnStyle, background: '#007bff', color: '#fff' }}>次の問題へ</button>
+          <button onClick={loadNext} className="btn" style={{ width: '100%', marginTop: '1rem' }}>次の問題へ</button>
         </div>
       )}
+
+      <style>{`
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
-
-const btnStyle = {
-  padding: '10px 20px',
-  margin: '5px',
-  border: 'none',
-  borderRadius: '4px',
-  cursor: 'pointer',
-  fontSize: '1rem'
-};
