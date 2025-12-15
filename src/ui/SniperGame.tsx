@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { questions } from '../data/questions.seed';
 import { getNextQuestion } from '../logic/scheduler';
 import { judge } from '../logic/judge';
@@ -19,6 +19,8 @@ const PATTERN_LABELS: Record<Pattern, string> = {
 };
 
 export default function SniperGame({ mode }: SniperGameProps) {
+  const navigate = useNavigate();
+
   // Lazy init to avoid effect state update
   const [question, setQuestion] = useState<Question | null>(() => {
     const answers = store.getAnswers();
@@ -101,12 +103,38 @@ export default function SniperGame({ mode }: SniperGameProps) {
     return () => clearInterval(interval);
   }, [isRunning, handleTimeout]);
 
+  // Keyboard support
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Escape to quit
+      if (e.key === 'Escape') {
+        navigate('/');
+        return;
+      }
+
+      // 1-5 for answering
+      if (isRunning && !feedback) {
+        if (['1', '2', '3', '4', '5'].includes(e.key)) {
+          handleAnswer(Number(e.key) as Pattern);
+        }
+      }
+
+      // Enter for next (only when feedback is shown)
+      if (e.key === 'Enter' && feedback) {
+        loadNextQuestion();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isRunning, feedback, handleAnswer, loadNextQuestion, navigate]);
+
   if (!question) return <div>読み込み中...</div>;
 
   return (
     <div className="game-container">
       <div className="nav-header">
-        <Link to="/" className="nav-link">← 戻る</Link>
+        <Link to="/" className="nav-link">← 戻る (Esc)</Link>
         <span style={{ fontWeight: 'bold', color: '#666' }}>モード: {mode === 'sniper' ? 'スナイパー' : '復習'}</span>
       </div>
 
@@ -132,7 +160,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
         }}>
           <div>{feedback.msg}</div>
           <button onClick={loadNextQuestion} className="btn" style={{ background: '#fff', color: '#333', marginTop: '20px' }}>
-            次へ
+            次へ (Enter)
           </button>
         </div>
       )}
@@ -141,6 +169,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
         {([1, 2, 3, 4, 5] as const).map(p => (
           <button key={p} onClick={() => handleAnswer(p)} className="pattern-btn" disabled={!isRunning}>
             {PATTERN_LABELS[p]}
+            <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>[{p}]</div>
           </button>
         ))}
       </div>
