@@ -5,6 +5,14 @@ import { judge } from '../logic/judge';
 import { store } from '../storage/store';
 import type { Question, Pattern, UserAnswer } from '../domain/types';
 
+const PATTERN_LABELS: Record<Pattern, string> = {
+  1: 'SV',
+  2: 'SVC',
+  3: 'SVO',
+  4: 'SVOO',
+  5: 'SVOC'
+};
+
 export default function Parse() {
   const [question, setQuestion] = useState<Question | null>(() => questions[Math.floor(Math.random() * questions.length)]);
   const [oCount, setOCount] = useState<number | null>(null);
@@ -53,7 +61,7 @@ export default function Parse() {
     store.appendAnswer(ans);
   };
 
-  if (!question) return <div>Loading...</div>;
+  if (!question) return <div>読み込み中...</div>;
 
   return (
     <div className="parse-container">
@@ -106,8 +114,8 @@ export default function Parse() {
             {result.isCorrect ? "正解!" : "不正解!"}
           </h2>
           <div style={{ textAlign: 'left', margin: '1rem 0' }}>
-            <p><strong>あなたの回答:</strong> 第{result.pattern}文型</p>
-            <p><strong>正解:</strong> 第{question.correctPattern}文型</p>
+            <p><strong>あなたの回答:</strong> {PATTERN_LABELS[result.pattern]}</p>
+            <p><strong>正解:</strong> {PATTERN_LABELS[question.correctPattern]}</p>
             <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.7)', borderRadius: '8px' }}>
               <strong>解説:</strong> {result.msg}
             </div>
