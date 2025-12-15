@@ -12,43 +12,43 @@ export default function Home() {
 
   return (
     <div className="home-container">
-      <h1>English 5 Patterns Trainer</h1>
+      <h1>英語5文型トレーナー</h1>
 
       <div className="menu-grid" style={{ display: 'grid', gap: '1rem', margin: '2rem 0' }}>
         <Link to="/sniper" className="btn btn-primary" style={btnStyle}>
-          Sniper Mode
-          <span style={subTextStyle}>Time Attack (2.0s)</span>
+          スナイパーモード
+          <span style={subTextStyle}>タイムアタック (2.0秒)</span>
         </Link>
         <Link to="/parse" className="btn btn-secondary" style={btnStyle}>
-          Parse Mode
-          <span style={subTextStyle}>Identify V-O-C</span>
+          解析モード
+          <span style={subTextStyle}>V-O-Cを判別</span>
         </Link>
         <Link to="/review" className="btn btn-accent" style={btnStyle}>
-          Review Mode
-          <span style={subTextStyle}>Focus on Weakness</span>
+          復習モード
+          <span style={subTextStyle}>苦手を克服</span>
         </Link>
       </div>
 
       <div className="stats-section" style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '8px' }}>
-        <h2>Rough Stats (MVP)</h2>
+        <h2>学習状況</h2>
         {stats ? (
           <div>
-            <p>Total Questions: {stats.totalQuestions}</p>
-            <p>Accuracy: {(stats.accuracy * 100).toFixed(1)}%</p>
-            <p>Avg Time: {stats.avgTimeMs}ms</p>
+            <p>総回答数: {stats.totalQuestions}</p>
+            <p>正答率: {(stats.accuracy * 100).toFixed(1)}%</p>
+            <p>平均回答時間: {stats.avgTimeMs}ms</p>
             <div style={{ marginTop: '0.5rem' }}>
-              <strong>Pattern Accuracy:</strong>
+              <strong>文型別正答率:</strong>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 {([1, 2, 3, 4, 5] as const).map(p => {
                   const s = stats.patternStats[p];
                   const rate = s.total > 0 ? ((s.correct / s.total) * 100).toFixed(0) : '-';
-                  return <li key={p}>P{p}: {rate}% ({s.correct}/{s.total})</li>
+                  return <li key={p}>第{p}文型: {rate}% ({s.correct}/{s.total})</li>
                 })}
               </ul>
             </div>
           </div>
         ) : (
-          <p>Loading stats...</p>
+          <p>データを読み込み中...</p>
         )}
       </div>
     </div>

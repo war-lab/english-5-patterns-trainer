@@ -36,7 +36,7 @@ export default function Parse() {
     else if (oCount === 1 && cCount === 1) p = 5;
 
     if (p === 0) {
-      setResult({ isCorrect: false, msg: "Invalid Combination (Not 1-5)", pattern: 1 }); // Dummy pattern
+      setResult({ isCorrect: false, msg: "無効な組み合わせです", pattern: 1 }); // Dummy pattern
       return;
     }
 
@@ -60,8 +60,8 @@ export default function Parse() {
   return (
     <div className="parse-container" style={{ padding: '20px', textAlign: 'center' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <Link to="/">Back</Link>
-        <span>Mode: PARSE</span>
+        <Link to="/">戻る</Link>
+        <span>モード: 解析</span>
       </div>
 
       <div className="card" style={{ padding: '30px', fontSize: '1.5rem', background: '#fff', border: '1px solid #ccc', marginBottom: '20px' }}>
@@ -71,7 +71,7 @@ export default function Parse() {
       {!result ? (
         <div>
           <div style={{ marginBottom: '20px' }}>
-            <p>How many **Objects (O)**?</p>
+            <p>目的語 (O) の数は?</p>
             {[0, 1, 2].map(n => (
               <button key={n} onClick={() => handleOSel(n)}
                 style={{ ...btnStyle, background: oCount === n ? '#007bff' : '#eee', color: oCount === n ? '#fff' : '#000' }}>
@@ -82,11 +82,11 @@ export default function Parse() {
 
           {oCount !== null && (
             <div style={{ marginBottom: '20px' }}>
-              <p>Is there a **Complement (C)**?</p>
+              <p>補語 (C) はある?</p>
               {[0, 1].map(n => (
                 <button key={n} onClick={() => handleCSel(n)}
                   style={{ ...btnStyle, background: cCount === n ? '#007bff' : '#eee', color: cCount === n ? '#fff' : '#000' }}>
-                  {n === 1 ? 'Yes (1)' : 'No (0)'}
+                  {n === 1 ? 'はい (1)' : 'いいえ (0)'}
                 </button>
               ))}
             </div>
@@ -94,7 +94,7 @@ export default function Parse() {
 
           {oCount !== null && cCount !== null && (
             <button onClick={checkAnswer} style={{ ...btnStyle, background: '#28a745', color: '#fff', width: '100%' }}>
-              Check Pattern
+              文型を判定
             </button>
           )}
         </div>
@@ -105,12 +105,12 @@ export default function Parse() {
             color: result.isCorrect ? '#155724' : '#721c24',
             padding: '20px', borderRadius: '5px', marginBottom: '20px'
           }}>
-            <h2>{result.isCorrect ? "Correct!" : "Wrong!"}</h2>
-            <p>Your Pattern: P{result.pattern}</p>
-            <p>Correct: P{question.correctPattern}</p>
-            <p>Hint: {result.msg}</p>
+            <h2>{result.isCorrect ? "正解!" : "不正解!"}</h2>
+            <p>あなたの回答: 第{result.pattern}文型</p>
+            <p>正解: 第{question.correctPattern}文型</p>
+            <p>解説: {result.msg}</p>
           </div>
-          <button onClick={loadNext} style={{ ...btnStyle, background: '#007bff', color: '#fff' }}>Next Question</button>
+          <button onClick={loadNext} style={{ ...btnStyle, background: '#007bff', color: '#fff' }}>次の問題へ</button>
         </div>
       )}
     </div>

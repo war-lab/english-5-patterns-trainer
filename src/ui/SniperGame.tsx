@@ -20,7 +20,6 @@ export default function SniperGame({ mode }: SniperGameProps) {
     return getNextQuestion(questions, answers);
   });
 
-  // Lazy init starts
   const [feedback, setFeedback] = useState<{ isCorrect: boolean; msg: string } | null>(null);
   const [timeLeft, setTimeLeft] = useState(2000);
   const [isRunning, setIsRunning] = useState(true);
@@ -59,7 +58,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
   const handleTimeout = useCallback(() => {
     setIsRunning(false);
     saveResult(false, 2000, 1 as Pattern);
-    setFeedback({ isCorrect: false, msg: `Time's up! Pattern: ${question?.correctPattern}` });
+    setFeedback({ isCorrect: false, msg: `時間切れ! 正解: 第${question?.correctPattern}文型` });
 
     setTimeout(() => {
       loadNextQuestion();
@@ -77,7 +76,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
 
     setFeedback({
       isCorrect: result.isCorrect,
-      msg: result.isCorrect ? "Great!" : `Miss! ${result.explanation}`
+      msg: result.isCorrect ? "正解!" : `不正解... ${result.explanation}`
     });
 
     setTimeout(() => {
@@ -100,13 +99,13 @@ export default function SniperGame({ mode }: SniperGameProps) {
     return () => clearInterval(interval);
   }, [isRunning, handleTimeout]);
 
-  if (!question) return <div>Loading...</div>;
+  if (!question) return <div>読み込み中...</div>;
 
   return (
     <div className="game-container" style={{ padding: '20px', textAlign: 'center' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <Link to="/">Back</Link>
-        <span>Mode: {mode.toUpperCase()}</span>
+        <Link to="/">戻る</Link>
+        <span>モード: {mode === 'sniper' ? 'スナイパー' : '復習'}</span>
       </div>
 
       <div style={{ marginBottom: '20px' }}>
@@ -127,7 +126,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
       {feedback && (
         <div style={{
           position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%, -50%)',
-          background: feedback.isCorrect ? 'rgba(0, 255, 0, 0.9)' : 'rgba(255, 0, 0, 0.9)',
+          background: feedback.isCorrect ? 'rgba(0, 128, 0, 0.9)' : 'rgba(200, 0, 0, 0.9)',
           color: '#fff', padding: '20px', borderRadius: '10px', fontSize: '2rem',
           width: '80%', textAlign: 'center'
         }}>
@@ -141,7 +140,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
             padding: '20px', fontSize: '1.2rem', cursor: 'pointer',
             backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px'
           }}>
-            P{p}
+            第{p}文型
           </button>
         ))}
       </div>
