@@ -180,7 +180,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
             </div>
 
             <div style={{ marginBottom: '15px' }}>
-              <div style={{ fontWeight: 'bold', color: '#555', marginBottom: '5px' }}>💡 根拠</div>
+              <div style={{ fontWeight: 'bold', color: '#555', marginBottom: '5px' }}>💡</div>
               <div style={{ fontSize: '1.1rem', lineHeight: '1.5' }}>{feedback.explanation.overall}</div>
             </div>
 
