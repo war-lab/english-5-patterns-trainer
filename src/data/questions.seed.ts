@@ -2,86 +2,17 @@ import type { Question } from '../domain/types';
 
 export const questions: Question[] = [
   // Old Questions (1-10)
-  {
-    "id": "q0001",
-    "sentence": "Birds fly.",
-    "level": 1,
-    "correctPattern": 1,
-    "explanation": { "overall": "OもCもない → SV" },
-    "tags": ["SV"]
-  },
-  {
-    "id": "q0002",
-    "sentence": "She is tired.",
-    "level": 1,
-    "correctPattern": 2,
-    "explanation": { "overall": "be動詞 + 補語(C) → SVC" },
-    "tags": ["SVC", "be"]
-  },
-  {
-    "id": "q0003",
-    "sentence": "I like coffee.",
-    "level": 1,
-    "correctPattern": 3,
-    "explanation": { "overall": "目的語が1つ → SVO" },
-    "tags": ["SVO"]
-  },
-  {
-    "id": "q0004",
-    "sentence": "He gave me a book.",
-    "level": 2,
-    "correctPattern": 4,
-    "explanation": { "overall": "目的語が2つ → SVOO" },
-    "tags": ["SVOO", "give"]
-  },
-  {
-    "id": "q0005",
-    "sentence": "They made him angry.",
-    "level": 2,
-    "correctPattern": 5,
-    "explanation": { "overall": "Oの後ろが補語(C) → SVOC" },
-    "tags": ["SVOC", "make"]
-  },
-  {
-    "id": "q0006",
-    "sentence": "He looked at the picture.",
-    "level": 3,
-    "correctPattern": 1,
-    "explanation": { "overall": "at以下は修飾語(M)扱い → SV" },
-    "tags": ["SV", "noise:pp"]
-  },
-  {
-    "id": "q0007",
-    "sentence": "She became a doctor.",
-    "level": 2,
-    "correctPattern": 2,
-    "explanation": { "overall": "becomeは補語(C)を取る → SVC" },
-    "tags": ["SVC", "become"]
-  },
-  {
-    "id": "q0008",
-    "sentence": "We found the room clean.",
-    "level": 4,
-    "correctPattern": 5,
-    "explanation": { "overall": "O + 形容詞(C) → SVOC" },
-    "tags": ["SVOC", "find"]
-  },
-  {
-    "id": "q0009",
-    "sentence": "Please show us the way.",
-    "level": 3,
-    "correctPattern": 4,
-    "explanation": { "overall": "us と the way の2目的語 → SVOO" },
-    "tags": ["SVOO", "show"]
-  },
-  {
-    "id": "q0010",
-    "sentence": "The meeting lasted two hours.",
-    "level": 4,
-    "correctPattern": 1,
-    "explanation": { "overall": "two hoursは目的語ではなく補足(M) → SV" },
-    "tags": ["SV", "noise:np"]
-  },
+  // Old Questions (1-10)
+  { id: "q0001", sentence: "Birds fly.", level: 1, correctPattern: 1, explanation: { overall: "OもCもない → SV" }, tags: ["SV"] },
+  { id: "q0002", sentence: "She is tired.", level: 1, correctPattern: 2, explanation: { overall: "be動詞 + 補語(C) → SVC" }, tags: ["SVC", "be"] },
+  { id: "q0003", sentence: "I like coffee.", level: 1, correctPattern: 3, explanation: { overall: "目的語が1つ → SVO" }, tags: ["SVO"] },
+  { id: "q0004", sentence: "He gave me a book.", level: 2, correctPattern: 4, explanation: { overall: "目的語が2つ → SVOO" }, tags: ["SVOO", "give"] },
+  { id: "q0005", sentence: "They made him angry.", level: 2, correctPattern: 5, explanation: { overall: "Oの後ろが補語(C) → SVOC" }, tags: ["SVOC", "make"] },
+  { id: "q0006", sentence: "He looked at the picture.", level: 3, correctPattern: 1, explanation: { overall: "at以下は修飾語(M)扱い → SV" }, tags: ["SV", "noise:pp"] },
+  { id: "q0007", sentence: "She became a doctor.", level: 2, correctPattern: 2, explanation: { overall: "becomeは補語(C)を取る → SVC" }, tags: ["SVC", "become"] },
+  { id: "q0008", sentence: "We found the room clean.", level: 4, correctPattern: 5, explanation: { overall: "O + 形容詞(C) → SVOC" }, tags: ["SVOC", "find"] },
+  { id: "q0009", sentence: "Please show us the way.", level: 3, correctPattern: 4, explanation: { overall: "us と the way の2目的語 → SVOO" }, tags: ["SVOO", "show"] },
+  { id: "q0010", sentence: "The meeting lasted two hours.", level: 4, correctPattern: 1, explanation: { overall: "two hoursは目的語ではなく補足(M) → SV" }, tags: ["SV", "noise:np"] },
   // New Questions (11-100)
   // SV
   { id: "q0011", sentence: "The baby cried.", level: 1, correctPattern: 1, explanation: { overall: "動詞だけで完結 → SV" }, tags: ["SV"] },
@@ -101,7 +32,7 @@ export const questions: Question[] = [
   { id: "q0025", sentence: "The store opens at 10.", level: 2, correctPattern: 1, explanation: { overall: "at 10は修飾語(M) → SV" }, tags: ["SV", "noise:pp"] },
   { id: "q0026", sentence: "Fire burns.", level: 1, correctPattern: 1, explanation: { overall: "動詞だけで完結 → SV" }, tags: ["SV"] },
   { id: "q0027", sentence: "We walked to the school.", level: 2, correctPattern: 1, explanation: { overall: "to the schoolは修飾語(M) → SV" }, tags: ["SV", "noise:pp"] },
-  { id: "q0028", sentence: "The class begins now.", level: 1, correctPattern: 1, explanation: { overall: "nowは副詞(M) → SV" }, tags: ["SV"] },
+  { id: "q0028", sentence: "The class begins now.", level: 1, correctPattern: 1, explanation: { overall: "nowは副詞(M) → SV" }, tags: ["SV", "noise:adv"] },
 
   // SVC
   { id: "q0029", sentence: "This soup tastes good.", level: 2, correctPattern: 2, explanation: { overall: "S=Cの関係(taste) → SVC" }, tags: ["SVC", "taste"] },
@@ -156,8 +87,8 @@ export const questions: Question[] = [
   { id: "q0074", sentence: "He lent me his pen.", level: 2, correctPattern: 4, explanation: { overall: "meとhis penの2重目的語 → SVOO" }, tags: ["SVOO", "lend"] },
   { id: "q0075", sentence: "Show me your passport.", level: 2, correctPattern: 4, explanation: { overall: "meとpassportの2重目的語 → SVOO" }, tags: ["SVOO", "show"] },
   { id: "q0076", sentence: "They offered him a job.", level: 3, correctPattern: 4, explanation: { overall: "himとa jobの2重目的語 → SVOO" }, tags: ["SVOO", "offer"] },
-  { id: "q0077", sentence: "I found her a nice room.", level: 3, correctPattern: 4, explanation: { overall: "herとa roomの2重目的語(見つけてあげる) → SVOO" }, tags: ["SVOO", "find"] },
-  { id: "q0078", sentence: "He promised me a gift.", level: 3, correctPattern: 4, explanation: { overall: "meとa giftの2重目的語 → SVOO" }, tags: ["SVOO", "promise"] },
+  { id: "q0077", sentence: "I brought him a chair.", level: 3, correctPattern: 4, explanation: { overall: "himとa chairの2重目的語 → SVOO" }, tags: ["SVOO", "bring"] },
+  { id: "q0078", sentence: "He sent me a letter.", level: 2, correctPattern: 4, explanation: { overall: "meとa letterの2重目的語 → SVOO" }, tags: ["SVOO", "send"] },
   { id: "q0079", sentence: "Grandma read us a story.", level: 2, correctPattern: 4, explanation: { overall: "usとa storyの2重目的語(読んであげる) → SVOO" }, tags: ["SVOO", "read"] },
   { id: "q0080", sentence: "Give him a hand.", level: 2, correctPattern: 4, explanation: { overall: "himとa handの2重目的語 → SVOO" }, tags: ["SVOO", "give"] },
   { id: "q0081", sentence: "I asked him a favor.", level: 3, correctPattern: 4, explanation: { overall: "himとa favorの2重目的語 → SVOO" }, tags: ["SVOO", "ask"] },
@@ -178,8 +109,8 @@ export const questions: Question[] = [
   { id: "q0094", sentence: "He heard his name called.", level: 3, correctPattern: 5, explanation: { overall: "O(name)=C(called)の関係(知覚) → SVOC" }, tags: ["SVOC", "hear"] },
   { id: "q0095", sentence: "Don't get me wrong.", level: 3, correctPattern: 5, explanation: { overall: "O(me)=C(wrong)の関係 → SVOC" }, tags: ["SVOC", "get"] },
   { id: "q0096", sentence: "She kept him waiting.", level: 3, correctPattern: 5, explanation: { overall: "O(him)=C(waiting)の関係 → SVOC" }, tags: ["SVOC", "keep"] },
-  { id: "q0097", sentence: "I want you to stay.", level: 3, correctPattern: 5, explanation: { overall: "SVO + to do は第5文型に分類されることが多い → SVOC" }, tags: ["SVOC", "want"] },
-  { id: "q0098", sentence: "He told me to go.", level: 3, correctPattern: 5, explanation: { overall: "SVO + to do は第5文型に分類されることが多い → SVOC" }, tags: ["SVOC", "tell"] },
+  { id: "q0097", sentence: "I want you to stay.", level: 3, correctPattern: 5, explanation: { overall: "このアプリでは O + to不定詞 を C 扱い → SVOC" }, tags: ["SVOC", "want", "svoc:to"] },
+  { id: "q0098", sentence: "He told me to go.", level: 3, correctPattern: 5, explanation: { overall: "このアプリでは O + to不定詞 を C 扱い → SVOC" }, tags: ["SVOC", "tell", "svoc:to"] },
   { id: "q0099", sentence: "She thinks herself smart.", level: 4, correctPattern: 5, explanation: { overall: "O(herself)=C(smart)の関係 → SVOC" }, tags: ["SVOC", "think"] },
-  { id: "q0100", sentence: "Music makes people smile.", level: 3, correctPattern: 5, explanation: { overall: "O(people)=C(smile)の関係(使役) → SVOC" }, tags: ["SVOC", "make"] }
+  { id: "q0100", sentence: "Music makes people smile.", level: 3, correctPattern: 5, explanation: { overall: "このアプリでは O + 原形不定詞 を C 扱い → SVOC" }, tags: ["SVOC", "make", "svoc:bare"] }
 ];
