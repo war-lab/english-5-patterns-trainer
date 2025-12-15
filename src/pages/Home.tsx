@@ -47,12 +47,38 @@ export default function Home() {
                   const rate = s.total > 0 ? ((s.correct / s.total) * 100).toFixed(0) : '-';
                   return (
                     <div key={p} style={{ background: '#eee', padding: '5px', borderRadius: '4px', textAlign: 'center', fontSize: '0.9rem' }}>
-                      <div>第{p}</div>
+                      <div>{PATTERN_LABELS[p]}</div>
                       <div style={{ fontWeight: 'bold', color: 'var(--primary-color)' }}>{rate}%</div>
                     </div>
                   );
                 })}
               </div>
+            </div>
+
+            {/* Confusion Matrix Top 3 */}
+            <div style={{ marginTop: '1.5rem', textAlign: 'left', background: '#fff3cd', padding: '10px', borderRadius: '8px' }}>
+              <strong style={{ display: 'block', marginBottom: '5px', color: '#856404' }}>⚠️ 混同しやすい文型 Top 3</strong>
+              {(() => {
+                const entries = Object.entries(stats.confusionMatrix)
+                  .map(([key, count]) => {
+                    const [correct, chosen] = key.split(':').map(Number);
+                    return { correct, chosen, count };
+                  })
+                  .sort((a, b) => b.count - a.count)
+                  .slice(0, 3);
+
+                if (entries.length === 0) return <div style={{ fontSize: '0.9rem', color: '#666' }}>まだデータがありません</div>;
+
+                return (
+                  <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                    {entries.map((e, i) => (
+                      <li key={i} style={{ fontSize: '0.9rem', marginBottom: '4px' }}>
+                        <strong>{PATTERN_LABELS[e.correct as any]}</strong> と思ったのに <strong>{PATTERN_LABELS[e.chosen as any]}</strong> ({e.count}回)
+                      </li>
+                    ))}
+                  </ul>
+                );
+              })()}
             </div>
           </div>
         ) : (
@@ -62,3 +88,6 @@ export default function Home() {
     </div>
   );
 }
+const PATTERN_LABELS: Record<any, string> = {
+  1: 'SV', 2: 'SVC', 3: 'SVO', 4: 'SVOO', 5: 'SVOC'
+};
