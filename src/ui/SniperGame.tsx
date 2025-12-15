@@ -10,6 +10,14 @@ interface SniperGameProps {
   mode: 'sniper' | 'review';
 }
 
+const PATTERN_LABELS: Record<Pattern, string> = {
+  1: 'SV',
+  2: 'SVC',
+  3: 'SVO',
+  4: 'SVOO',
+  5: 'SVOC'
+};
+
 export default function SniperGame({ mode }: SniperGameProps) {
   // Lazy init to avoid effect state update
   const [question, setQuestion] = useState<Question | null>(() => {
@@ -58,7 +66,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
   const handleTimeout = useCallback(() => {
     setIsRunning(false);
     saveResult(false, 2000, 1 as Pattern);
-    setFeedback({ isCorrect: false, msg: `時間切れ! 正解: 第${question?.correctPattern}文型` });
+    setFeedback({ isCorrect: false, msg: `時間切れ! 正解: ${PATTERN_LABELS[question?.correctPattern as Pattern]}` });
 
     setTimeout(() => {
       loadNextQuestion();
@@ -102,45 +110,39 @@ export default function SniperGame({ mode }: SniperGameProps) {
   if (!question) return <div>読み込み中...</div>;
 
   return (
-    <div className="game-container" style={{ padding: '20px', textAlign: 'center' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <Link to="/">戻る</Link>
-        <span>モード: {mode === 'sniper' ? 'スナイパー' : '復習'}</span>
+    <div className="game-container">
+      <div className="nav-header">
+        <Link to="/" className="nav-link">← 戻る</Link>
+        <span style={{ fontWeight: 'bold', color: '#666' }}>モード: {mode === 'sniper' ? 'スナイパー' : '復習'}</span>
       </div>
 
       <div style={{ marginBottom: '20px' }}>
-        <div style={{ height: '10px', background: '#eee', borderRadius: '5px' }}>
+        <div style={{ height: '8px', background: '#eee', borderRadius: '4px', overflow: 'hidden' }}>
           <div style={{
             height: '100%',
             width: `${(timeLeft / 2000) * 100}%`,
-            background: timeLeft < 500 ? 'red' : 'green',
+            background: timeLeft < 500 ? 'var(--error-color)' : 'var(--success-color)',
             transition: 'width 0.1s linear'
           }} />
         </div>
       </div>
 
-      <div className="card" style={{ padding: '40px', fontSize: '1.5rem', background: '#fff', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', marginBottom: '30px', minHeight: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="card question-card">
         {question.sentence}
       </div>
 
       {feedback && (
-        <div style={{
-          position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%, -50%)',
-          background: feedback.isCorrect ? 'rgba(0, 128, 0, 0.9)' : 'rgba(200, 0, 0, 0.9)',
-          color: '#fff', padding: '20px', borderRadius: '10px', fontSize: '2rem',
-          width: '80%', textAlign: 'center'
+        <div className="feedback-overlay" style={{
+          backgroundColor: feedback.isCorrect ? 'rgba(46, 204, 113, 0.95)' : 'rgba(231, 76, 60, 0.95)'
         }}>
           {feedback.msg}
         </div>
       )}
 
-      <div className="buttons-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px' }}>
+      <div className="pattern-grid">
         {([1, 2, 3, 4, 5] as const).map(p => (
-          <button key={p} onClick={() => handleAnswer(p)} style={{
-            padding: '20px', fontSize: '1.2rem', cursor: 'pointer',
-            backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px'
-          }}>
-            第{p}文型
+          <button key={p} onClick={() => handleAnswer(p)} className="pattern-btn">
+            {PATTERN_LABELS[p]}
           </button>
         ))}
       </div>
