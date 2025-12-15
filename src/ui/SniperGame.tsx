@@ -67,11 +67,8 @@ export default function SniperGame({ mode }: SniperGameProps) {
     setIsRunning(false);
     saveResult(false, 2000, 1 as Pattern);
     setFeedback({ isCorrect: false, msg: `時間切れ! 正解: ${PATTERN_LABELS[question?.correctPattern as Pattern]}` });
-
-    setTimeout(() => {
-      loadNextQuestion();
-    }, 800);
-  }, [question, loadNextQuestion, saveResult]);
+    // No auto-advance
+  }, [question, saveResult]);
 
   const handleAnswer = useCallback((p: Pattern) => {
     if (!isRunning || !question) return;
@@ -86,11 +83,8 @@ export default function SniperGame({ mode }: SniperGameProps) {
       isCorrect: result.isCorrect,
       msg: result.isCorrect ? "正解!" : `不正解... ${result.explanation}`
     });
-
-    setTimeout(() => {
-      loadNextQuestion();
-    }, 800);
-  }, [isRunning, question, startTime, saveResult, loadNextQuestion]);
+    // No auto-advance
+  }, [isRunning, question, startTime, saveResult]);
 
   // Timer
   useEffect(() => {
@@ -133,15 +127,19 @@ export default function SniperGame({ mode }: SniperGameProps) {
 
       {feedback && (
         <div className="feedback-overlay" style={{
-          backgroundColor: feedback.isCorrect ? 'rgba(46, 204, 113, 0.95)' : 'rgba(231, 76, 60, 0.95)'
+          backgroundColor: feedback.isCorrect ? 'rgba(46, 204, 113, 0.95)' : 'rgba(231, 76, 60, 0.95)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px'
         }}>
-          {feedback.msg}
+          <div>{feedback.msg}</div>
+          <button onClick={loadNextQuestion} className="btn" style={{ background: '#fff', color: '#333', marginTop: '20px' }}>
+            次へ
+          </button>
         </div>
       )}
 
       <div className="pattern-grid">
         {([1, 2, 3, 4, 5] as const).map(p => (
-          <button key={p} onClick={() => handleAnswer(p)} className="pattern-btn">
+          <button key={p} onClick={() => handleAnswer(p)} className="pattern-btn" disabled={!isRunning}>
             {PATTERN_LABELS[p]}
           </button>
         ))}
