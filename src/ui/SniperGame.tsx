@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { questions } from '../data/questions.seed';
 import { getNextQuestion } from '../logic/scheduler';
 import { judge } from '../logic/judge';
@@ -36,7 +36,9 @@ export default function SniperGame({ mode }: SniperGameProps) {
     correctPattern: Pattern
   } | null>(null);
 
-  const [timeLeft, setTimeLeft] = useState(2000);
+  const location = useLocation();
+  const limitMs = (location.state as { limitMs?: number })?.limitMs ?? 2000;
+  const [timeLeft, setTimeLeft] = useState(limitMs);
   const [isRunning, setIsRunning] = useState(true);
   const [startTime, setStartTime] = useState(() => Date.now());
 
@@ -65,21 +67,21 @@ export default function SniperGame({ mode }: SniperGameProps) {
     }
     setQuestion(q);
     setFeedback(null);
-    setTimeLeft(2000);
+    setTimeLeft(limitMs);
     setStartTime(Date.now());
     setIsRunning(true);
-  }, [mode]);
+  }, [mode, limitMs]);
 
   const handleTimeout = useCallback(() => {
     setIsRunning(false);
-    saveResult(false, 2000, 1 as Pattern);
+    saveResult(false, limitMs, 1 as Pattern);
     setFeedback({
       isCorrect: false,
       explanation: question?.explanation || { overall: "時間切れ" },
       correctPattern: question?.correctPattern as Pattern
     });
     // No auto-advance
-  }, [question, saveResult]);
+  }, [question, saveResult, limitMs]);
 
   const handleAnswer = useCallback((p: Pattern) => {
     if (!isRunning || !question) return;
@@ -148,11 +150,13 @@ export default function SniperGame({ mode }: SniperGameProps) {
         <span style={{ fontWeight: 'bold', color: '#666' }}>モード: {mode === 'sniper' ? 'スナイパー' : '復習'}</span>
       </div>
 
+
+
       <div style={{ marginBottom: '20px' }}>
         <div style={{ height: '8px', background: '#eee', borderRadius: '4px', overflow: 'hidden' }}>
           <div style={{
             height: '100%',
-            width: `${(timeLeft / 2000) * 100}%`,
+            width: `${(timeLeft / limitMs) * 100}%`,
             background: timeLeft < 500 ? 'var(--error-color)' : 'var(--success-color)',
             transition: 'width 0.1s linear'
           }} />
@@ -164,35 +168,31 @@ export default function SniperGame({ mode }: SniperGameProps) {
       </div>
 
       {feedback && (
-        <div className="feedback-overlay" style={{
-          backgroundColor: feedback.isCorrect ? 'rgba(46, 204, 113, 0.95)' : 'rgba(231, 76, 60, 0.95)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', padding: '2rem',
-          overflowY: 'auto', maxHeight: '100%'
-        }}>
-          <h2 style={{ fontSize: '2rem', margin: 0 }}>{feedback.isCorrect ? "正解!" : "不正解..."}</h2>
+        <div className={`feedback-overlay ${feedback.isCorrect ? 'correct' : 'incorrect'}`}>
+          <h2 className="feedback-title">{feedback.isCorrect ? "正解!" : "不正解..."}</h2>
 
-          <div style={{ background: 'rgba(255,255,255,0.95)', padding: '20px', borderRadius: '8px', color: '#333', textAlign: 'left', width: '100%', maxWidth: '500px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-            <div style={{ marginBottom: '15px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
-              <span style={{ fontSize: '0.9rem', color: '#666' }}>正解文型</span>
-              <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>
+          <div className="feedback-content">
+            <div className="feedback-section border-bottom">
+              <span className="feedback-label">正解文型</span>
+              <div className="feedback-value">
                 {PATTERN_LABELS[feedback.correctPattern]}
               </div>
             </div>
 
-            <div style={{ marginBottom: '15px' }}>
-              <div style={{ fontWeight: 'bold', color: '#555', marginBottom: '5px' }}>💡</div>
-              <div style={{ fontSize: '1.1rem', lineHeight: '1.5' }}>{feedback.explanation.overall}</div>
+            <div className="feedback-section">
+              <div style={{ fontWeight: 'bold', color: '#555', marginBottom: '5px' }}>💡 解説</div>
+              <div className="feedback-text">{feedback.explanation.overall}</div>
             </div>
 
             {feedback.explanation.trap && (
-              <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '2px dashed #ffcccb', backgroundColor: '#fff5f5', padding: '10px', borderRadius: '4px' }}>
-                <div style={{ fontWeight: 'bold', color: '#e74c3c', marginBottom: '5px' }}>⚠️ 引っかけポイント</div>
+              <div className="feedback-trap">
+                <div className="trap-header">⚠️ 引っかけポイント</div>
                 <div style={{ fontSize: '1rem' }}>{feedback.explanation.trap}</div>
               </div>
             )}
           </div>
 
-          <button onClick={loadNextQuestion} className="btn" style={{ background: '#fff', color: '#333', marginTop: '10px', width: '200px', fontWeight: 'bold' }}>
+          <button onClick={loadNextQuestion} className="next-btn">
             次へ (Enter)
           </button>
         </div>

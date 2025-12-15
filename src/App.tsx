@@ -14,7 +14,7 @@ import Parse from './pages/Parse';
 export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <div className="app-container" style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+      <div className="app-container">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sniper" element={<Sniper />} />
