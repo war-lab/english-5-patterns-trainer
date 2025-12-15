@@ -17,7 +17,7 @@ export default function Parse() {
   const [question, setQuestion] = useState<Question | null>(() => questions[Math.floor(Math.random() * questions.length)]);
   const [oCount, setOCount] = useState<number | null>(null);
   const [cCount, setCCount] = useState<number | null>(null);
-  const [result, setResult] = useState<{ isCorrect: boolean; msg: string; pattern: Pattern } | null>(null);
+  const [result, setResult] = useState<{ isCorrect: boolean; explanation: { overall: string; trap?: string }; pattern: Pattern } | null>(null);
 
   const loadNext = () => {
     const q = questions[Math.floor(Math.random() * questions.length)];
@@ -42,12 +42,12 @@ export default function Parse() {
     else if (oCount === 1 && cCount === 1) p = 5;
 
     if (p === 0) {
-      setResult({ isCorrect: false, msg: "無効な組み合わせです", pattern: 1 }); // Dummy pattern
+      setResult({ isCorrect: false, explanation: { overall: "無効な組み合わせです" }, pattern: 1 }); // Dummy pattern
       return;
     }
 
     const { isCorrect, explanation } = judge(question, p as Pattern);
-    setResult({ isCorrect, msg: explanation, pattern: p as Pattern });
+    setResult({ isCorrect, explanation, pattern: p as Pattern });
 
     // Save
     const ans: UserAnswer = {
@@ -117,7 +117,10 @@ export default function Parse() {
             <p><strong>あなたの回答:</strong> {PATTERN_LABELS[result.pattern]}</p>
             <p><strong>正解:</strong> {PATTERN_LABELS[question.correctPattern]}</p>
             <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.7)', borderRadius: '8px' }}>
-              <strong>解説:</strong> {result.msg}
+              <div><strong>解説:</strong> {result.explanation.overall}</div>
+              {result.explanation.trap && (
+                <div style={{ marginTop: '0.5rem', color: 'red' }}><strong>⚠️ ポイント:</strong> {result.explanation.trap}</div>
+              )}
             </div>
           </div>
           <button onClick={loadNext} className="btn" style={{ width: '100%', marginTop: '1rem' }}>次の問題へ</button>

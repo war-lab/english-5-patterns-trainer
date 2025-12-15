@@ -5,7 +5,10 @@ export interface Question {
   sentence: string;
   level: number; // 1..5 (difficulty)
   correctPattern: Pattern;
-  explanationShort: string;
+  explanation: {
+    overall: string; // The main explanation text (old explanationShort)
+    trap?: string;   // Potential trap or confusion point
+  };
   tags: string[];
 }
 
