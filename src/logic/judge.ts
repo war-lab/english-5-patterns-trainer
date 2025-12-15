@@ -1,0 +1,14 @@
+import type { Question, Pattern } from '../domain/types';
+
+export interface JudgeResult {
+  isCorrect: boolean;
+  explanation: string;
+}
+
+export function judge(question: Question, chosenPattern: Pattern): JudgeResult {
+  const isCorrect = question.correctPattern === chosenPattern;
+  return {
+    isCorrect,
+    explanation: question.explanationShort,
+  };
+}

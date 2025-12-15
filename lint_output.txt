@@ -1,0 +1,90 @@
+
+> english-5-patterns-trainer@0.0.0 lint
+> eslint .
+
+
+C:\new\dev\english-5-patterns-trainer\english-5-patterns-trainer\src\App.tsx
+  6:8  error  'Layout' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\new\dev\english-5-patterns-trainer\english-5-patterns-trainer\src\pages\Home.tsx
+  13:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\new\dev\english-5-patterns-trainer\english-5-patterns-trainer\src\pages\Home.tsx:13:5
+  11 |     const answers = store.getAnswers();
+  12 |     const summary = calculateStats(answers);
+> 13 |     setStats(summary);
+     |     ^^^^^^^^ Avoid calling setState() directly within an effect
+  14 |   }, []);
+  15 |
+  16 |   return (  react-hooks/set-state-in-effect
+
+C:\new\dev\english-5-patterns-trainer\english-5-patterns-trainer\src\pages\Parse.tsx
+  15:5  error  Error: Cannot access variable before it is declared
+
+`loadNext` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\new\dev\english-5-patterns-trainer\english-5-patterns-trainer\src\pages\Parse.tsx:15:5
+  13 |
+  14 |   useEffect(() => {
+> 15 |     loadNext();
+     |     ^^^^^^^^ `loadNext` accessed before it is declared
+  16 |   }, []);
+  17 |
+  18 |   const loadNext = () => {
+
+C:\new\dev\english-5-patterns-trainer\english-5-patterns-trainer\src\pages\Parse.tsx:18:3
+  16 |   }, []);
+  17 |
+> 18 |   const loadNext = () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^
+> 19 |     const q = questions[Math.floor(Math.random() * questions.length)];
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 20 |     setQuestion(q);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 21 |     setOCount(null);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 22 |     setCCount(null);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 23 |     setResult(null);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 24 |   };
+     | ^^^^^ `loadNext` is declared here
+  25 |
+  26 |   const handleOSel = (n: number) => setOCount(n);
+  27 |   const handleCSel = (n: number) => setCCount(n);  react-hooks/immutability
+
+C:\new\dev\english-5-patterns-trainer\english-5-patterns-trainer\src\ui\SniperGame.tsx
+  56:6   warning  React Hook useEffect has a missing dependency: 'handleTimeout'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react-hooks/exhaustive-deps
+  86:18  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\new\dev\english-5-patterns-trainer\english-5-patterns-trainer\src\ui\SniperGame.tsx:86:18
+  84 |       isCorrect,
+  85 |       timeMs,
+> 86 |       timestamp: Date.now()
+     |                  ^^^^^^^^^^ Cannot call impure function
+  87 |     };
+  88 |     store.appendAnswer(answer);
+  89 |   };                                                                                                       react-hooks/purity
+  94:23  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\new\dev\english-5-patterns-trainer\english-5-patterns-trainer\src\ui\SniperGame.tsx:94:23
+  92 |     if (!isRunning || !question) return;
+  93 |     setIsRunning(false);
+> 94 |     const timeTaken = Date.now() - startTime;
+     |                       ^^^^^^^^^^ Cannot call impure function
+  95 |     const result = judge(question, p);
+  96 |
+  97 |     saveResult(result.isCorrect, timeTaken, p);  react-hooks/purity
+
+笨・6 problems (5 errors, 1 warning)
+
