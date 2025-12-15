@@ -11,10 +11,28 @@ export function getNextQuestion(allQuestions: Question[], answers: UserAnswer[])
     throw new Error("No questions available");
   }
 
-  // If no answers yet, return random
+  // If no answers yet, return random Level 1 question
   if (answers.length === 0) {
-    return allQuestions[Math.floor(Math.random() * allQuestions.length)];
+    const level1Questions = allQuestions.filter(q => q.level === 1);
+    return level1Questions[Math.floor(Math.random() * level1Questions.length)];
   }
+
+  // Calculate stats to determine current level cap
+  const correctCount = answers.filter(a => a.isCorrect).length;
+  let maxLevel = 1;
+  if (correctCount >= 100) maxLevel = 5;
+  else if (correctCount >= 60) maxLevel = 4;
+  else if (correctCount >= 30) maxLevel = 3;
+  else if (correctCount >= 10) maxLevel = 2;
+
+  // Filter questions by level cap
+  const availableQuestions = allQuestions.filter(q => q.level <= maxLevel);
+  // Fallback to all if somehow empty (e.g. no level 1 questions defined)
+  const candidateQuestions = availableQuestions.length > 0 ? availableQuestions : allQuestions;
+
+  // Use candidateQuestions for subsequent logic instead of allQuestions
+  // We need to map original logic to use candidateQuestions
+
 
   const recentAnswers = answers.slice(-10);
   const lastAnswer = recentAnswers[recentAnswers.length - 1];
@@ -50,7 +68,7 @@ export function getNextQuestion(allQuestions: Question[], answers: UserAnswer[])
     });
 
   // Calculate weights
-  const weightedQuestions = allQuestions.map(q => {
+  const weightedQuestions = candidateQuestions.map(q => {
     let weight = 10;
 
     // Boost for recent wrong
@@ -83,5 +101,5 @@ export function getNextQuestion(allQuestions: Question[], answers: UserAnswer[])
   }
 
   // Fallback
-  return allQuestions[0];
+  return candidateQuestions[0];
 }

@@ -297,7 +297,7 @@ button {
 
 .feedback-value {
   font-size: 2rem;
-  fontWeight: 800;
+  font-weight: 800;
   color: var(--primary-color);
   line-height: 1.2;
 }
