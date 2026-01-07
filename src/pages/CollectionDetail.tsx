@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { collectionStore } from '../logic/collectionStore';
 import { VERB_DATA } from '../data/verbData';
 import { questions } from '../data/questions.seed';
+import { getRarityStyle } from '../ui/visuals';
 import type { CardProgress } from '../domain/types';
 
 export default function CollectionDetail() {
@@ -32,9 +33,16 @@ export default function CollectionDetail() {
         <Link to="/collection" className="nav-link">← Back</Link>
       </div>
 
-      <div className="card" style={{ padding: '20px', marginBottom: '20px', textAlign: 'center' }}>
-        <div style={{ fontSize: '0.9rem', color: '#888', textTransform: 'uppercase' }}>
-          Rarity: {data.rarity}
+      <div className="card" style={{
+        ...getRarityStyle(data.rarity),
+        padding: '30px',
+        marginBottom: '20px',
+        textAlign: 'center',
+        // Override transform from list view if any
+        transform: 'none'
+      }}>
+        <div style={{ fontSize: '0.9rem', color: '#888', textTransform: 'uppercase', marginBottom: '8px' }}>
+          {getRarityLabel(data.rarity)}
         </div>
         <h1 style={{ fontSize: '2.5rem', margin: '10px 0' }}>{verbId}</h1>
         <div style={{ fontSize: '1.2rem', color: '#555', marginBottom: '20px' }}>{data.meaning}</div>
@@ -85,4 +93,12 @@ export default function CollectionDetail() {
       </div>
     </div>
   );
+}
+
+function getRarityLabel(rarity: 'N' | 'R' | 'SR') {
+  switch (rarity) {
+    case 'SR': return '🌟 SUPER RARE 🌟';
+    case 'R': return '✨ RARE';
+    default: return 'NORMAL';
+  }
 }

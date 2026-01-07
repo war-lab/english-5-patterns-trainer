@@ -241,7 +241,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
                 color: '#d32f2f',
                 fontWeight: 'bold',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-                animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                animation: 'popScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
               }}>
                 {feedback.collectionUpdate.unlocked ? `✨ New Card: ${feedback.collectionUpdate.verbId}!` :
                   feedback.collectionUpdate.leveUp ? `🆙 ${feedback.collectionUpdate.verbId} Level Up!` : ''}

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { collectionStore } from '../logic/collectionStore';
 import { VERB_DATA } from '../data/verbData';
+import { getRarityStyle } from '../ui/visuals';
 import type { VerbCardCollection } from '../domain/types';
 
 export default function CollectionList() {
@@ -26,6 +27,20 @@ export default function CollectionList() {
       <div className="nav-header">
         <Link to="/" className="nav-link">← Home</Link>
         <h1>Verb Collection</h1>
+      </div>
+
+      <div style={{ background: '#f8f9fa', padding: '15px', borderRadius: '8px', marginBottom: '20px', fontSize: '0.9rem', color: '#555' }}>
+        <div style={{ fontWeight: 'bold', marginBottom: '8px', borderBottom: '1px solid #ddd', paddingBottom: '4px' }}>レアリティについて</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '8px 16px', alignItems: 'center' }}>
+          <span style={{ fontWeight: 'bold', color: '#DAA520' }}>🌟 SR (Super Rare)</span>
+          <span>多くの文型を持つ重要動詞。または混同しやすい難関動詞。</span>
+
+          <span style={{ fontWeight: 'bold', color: '#A9A9A9' }}>✨ R (Rare)</span>
+          <span>3つ以上の文型を取る動詞、または少し注意が必要な動詞。</span>
+
+          <span style={{ fontWeight: 'bold', color: '#666' }}>N (Normal)</span>
+          <span>基本的な動詞。まずはここからマスターしよう。</span>
+        </div>
       </div>
 
       <div className="collection-grid" style={{
@@ -79,44 +94,4 @@ export default function CollectionList() {
       </div>
     </div>
   );
-}
-
-function getRarityStyle(rarity?: 'N' | 'R' | 'SR') {
-  if (!rarity) {
-    return {
-      background: '#eee',
-      border: '1px dashed #aaa',
-      boxShadow: 'none'
-    };
-  }
-
-  const baseStyle = {
-    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-    border: '1px solid #ddd' // Default border
-  };
-
-  switch (rarity) {
-    case 'SR':
-      return {
-        ...baseStyle,
-        background: 'linear-gradient(135deg, #fff 0%, #fff7e6 100%)',
-        border: '2px solid #FFD700',
-        boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4)',
-        transform: 'scale(1.02)'
-      };
-    case 'R':
-      return {
-        ...baseStyle,
-        background: 'linear-gradient(135deg, #fff 0%, #f4f4f4 100%)',
-        border: '2px solid #C0C0C0',
-        boxShadow: '0 4px 10px rgba(192, 192, 192, 0.4)'
-      };
-    case 'N':
-    default:
-      return {
-        ...baseStyle,
-        background: 'white',
-        border: '1px solid #e0e0e0'
-      };
-  }
 }
