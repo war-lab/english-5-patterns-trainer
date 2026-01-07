@@ -103,7 +103,7 @@ export default function Home() {
                   <ul style={{ margin: 0, paddingLeft: '20px' }}>
                     {entries.map((e, i) => (
                       <li key={i} style={{ fontSize: '0.9rem', marginBottom: '4px' }}>
-                        <strong>{PATTERN_LABELS[e.correct as any]}</strong> と思ったのに <strong>{PATTERN_LABELS[e.chosen as any]}</strong> ({e.count}回)
+                        <strong>{PATTERN_LABELS[e.correct as Pattern]}</strong> と思ったのに <strong>{PATTERN_LABELS[e.chosen as Pattern]}</strong> ({e.count}回)
                       </li>
                     ))}
                   </ul>
