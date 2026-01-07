@@ -100,8 +100,6 @@ export const VERB_DATA: Record<string, VerbStaticData> = {
   "hear": { meaning: "聞こえる", typicalPattern: 5, rarity: 'R' }, // 知覚
   "see": { meaning: "見える", typicalPattern: 5, rarity: 'R' }, // 知覚
   "watch": { meaning: "見る", typicalPattern: 5, rarity: 'R' }, // 知覚
-  "feel": { meaning: "感じる", typicalPattern: 5, rarity: 'R' }, // 知覚 (SVOC)
   "notice": { meaning: "気づく", typicalPattern: 5, rarity: 'R' },
   "let": { meaning: "〜させる", typicalPattern: 5, rarity: 'R' }, // 使役 (bare)
-  "have": { meaning: "持つ・〜させる", typicalPattern: 5, rarity: 'SR' }, // 使役 (bare, pp)
 };
