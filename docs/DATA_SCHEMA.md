@@ -15,10 +15,29 @@
 | `explanation.trap` | `string` (optional) | 間違えやすいポイントや引っかけ (例: "副詞はOにならない") |
 | `tags` | `string[]` | タグ (例: `["SVO", "make", "noise:adv"]`) |
 
-## 補足: タグの運用ルール
+## 補足: タグの運用ルール (Tagging Rules)
 
-*   **文型タグ**: `SV`, `SVC`, ... (必須)
-*   **動詞タグ**: `make`, `get`, `find` ... (重要動詞はタグ付け推奨)
+v1.2.0より、タグの衝突を防ぐためにプレフィックス制を導入しました。
+
+*   **文型タグ**: `p:SV`, `p:SVC`, ... (必須)
+*   **動詞タグ**: `v:make`, `v:get` ... (動詞図鑑との連携に必須)
+*   **ノイズタグ**:
+    *   `noise:adv`: 副詞 (adverb)
+    *   `noise:pp`: 前置詞句
+    *   `noise:np`: 副詞的名詞句
+*   **罠タグ**:
+    *   `trap:svoc`: SVOCと間違えやすい
+    *   `trap:lie`: lie/layの混同 など
+
+## VerbCard オブジェクト (Collection Mode)
+
+動詞図鑑のマスターデータ (`src/data/verbData.ts`) で定義されます。
+
+| プロパティ | 型 | 説明 |
+| :--- | :--- | :--- |
+| `id` | `string` | 動詞の原形 (例: `give`) |
+| `rarity` | `'N' \| 'R' \| 'SR'` | レアリティ |
+| `typicalPattern` | `Pattern` | その動詞の最も代表的な文型 |
 *   **ノイズタグ**: 文型判定を惑わせる要素
     *   `noise:adv`: 副詞 (adverb)
     *   `noise:pp`: 前置詞句 (prepositional phrase)
