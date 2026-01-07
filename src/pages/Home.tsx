@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { store } from '../storage/store';
 import { calculateStats } from '../logic/stats';
-import type { StatsSummary } from '../domain/types';
+import type { StatsSummary, Pattern } from '../domain/types';
+
+const PATTERN_LABELS: Record<Pattern, string> = {
+  1: 'SV', 2: 'SVC', 3: 'SVO', 4: 'SVOO', 5: 'SVOC'
+};
 
 export default function Home() {
   const [stats] = useState<StatsSummary | null>(() => {
@@ -48,6 +52,10 @@ export default function Home() {
         <Link to="/review" className="menu-item">
           <h3>🔄 復習モード</h3>
           <span>苦手を克服</span>
+        </Link>
+        <Link to="/collection" className="menu-item" style={{ background: '#f0f8ff', border: '1px solid #cce5ff' }}>
+          <h3>📖 動詞図鑑</h3>
+          <span>集めて育てる</span>
         </Link>
       </div>
 
@@ -95,7 +103,7 @@ export default function Home() {
                   <ul style={{ margin: 0, paddingLeft: '20px' }}>
                     {entries.map((e, i) => (
                       <li key={i} style={{ fontSize: '0.9rem', marginBottom: '4px' }}>
-                        <strong>{PATTERN_LABELS[e.correct as any]}</strong> と思ったのに <strong>{PATTERN_LABELS[e.chosen as any]}</strong> ({e.count}回)
+                        <strong>{PATTERN_LABELS[e.correct as Pattern]}</strong> と思ったのに <strong>{PATTERN_LABELS[e.chosen as Pattern]}</strong> ({e.count}回)
                       </li>
                     ))}
                   </ul>
@@ -110,6 +118,3 @@ export default function Home() {
     </div >
   );
 }
-const PATTERN_LABELS: Record<any, string> = {
-  1: 'SV', 2: 'SVC', 3: 'SVO', 4: 'SVOO', 5: 'SVOC'
-};

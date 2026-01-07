@@ -3,6 +3,8 @@ import Home from './pages/Home';
 import Sniper from './pages/Sniper';
 import Review from './pages/Review';
 import Parse from './pages/Parse';
+import CollectionList from './pages/CollectionList';
+import CollectionDetail from './pages/CollectionDetail';
 
 // Layout component can be defined inline or imported. 
 // For now I'll use a wrapper in App or separate file. 
@@ -20,6 +22,8 @@ export default function App() {
           <Route path="/sniper" element={<Sniper />} />
           <Route path="/review" element={<Review />} />
           <Route path="/parse" element={<Parse />} />
+          <Route path="/collection" element={<CollectionList />} />
+          <Route path="/collection/:verbId" element={<CollectionDetail />} />
         </Routes>
       </div>
     </BrowserRouter>

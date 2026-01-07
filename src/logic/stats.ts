@@ -1,3 +1,4 @@
+import { questions } from '../data/questions.seed';
 import type { UserAnswer, StatsSummary, Pattern } from '../domain/types';
 
 export function calculateStats(answers: UserAnswer[]): StatsSummary {
@@ -32,21 +33,33 @@ export function calculateStats(answers: UserAnswer[]): StatsSummary {
 
   const confusionMatrix: Record<string, number> = {};
 
+  // Create a map for fast lookup
+  const questionMap = new Map(questions.map(q => [q.id, q]));
+
   for (const ans of answers) {
     if (ans.isCorrect) correctCount++;
     totalTimeMs += ans.timeMs;
 
-    // Pattern stats using correctPattern which is now in UserAnswer
-    const p = ans.correctPattern;
-    if (patternStats[p]) {
+    // Pattern stats using correctPattern. 
+    // Fallback: lookup in question data if missing (legacy data)
+    let p = ans.correctPattern;
+    if (!p) {
+      const q = questionMap.get(ans.questionId);
+      if (q) p = q.correctPattern;
+    }
+
+    if (p && patternStats[p]) {
       patternStats[p].total++;
       if (ans.isCorrect) patternStats[p].correct++;
     }
 
     // Confusion matrix
     if (!ans.isCorrect) {
-      const key = `${ans.correctPattern}:${ans.chosenPattern}`;
-      confusionMatrix[key] = (confusionMatrix[key] || 0) + 1;
+      const chosen = ans.chosenPattern;
+      if (p && chosen) {
+        const key = `${p}:${chosen}`;
+        confusionMatrix[key] = (confusionMatrix[key] || 0) + 1;
+      }
     }
   }
 
