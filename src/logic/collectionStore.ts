@@ -1,4 +1,4 @@
-import type { VerbCardCollection, CardProgress, Pattern } from '../domain/types';
+import type { VerbCardCollection } from '../domain/types';
 import { VERB_DATA } from '../data/verbData';
 
 const STORAGE_KEY = 'e5pt.verbcards.v1';
