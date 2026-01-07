@@ -1,4 +1,4 @@
-import { Pattern } from '../domain/types';
+import type { Pattern } from '../domain/types';
 
 export interface VerbStaticData {
   meaning: string;
