@@ -45,21 +45,20 @@ export default function CollectionList() {
               key={id}
               className={`verb-card-item ${isOwned ? 'owned' : 'locked'}`}
               style={{
-                background: isOwned ? 'white' : '#ddd',
-                border: isOwned ? `2px solid ${getRarityColor(data.rarity)}` : '1px dashed #aaa',
+                ...getRarityStyle(isOwned ? data.rarity : undefined),
                 borderRadius: '8px',
                 padding: '10px',
                 textAlign: 'center',
                 textDecoration: 'none',
                 color: isOwned ? '#333' : '#999',
-                boxShadow: isOwned ? '0 2px 5px rgba(0,0,0,0.1)' : 'none',
                 cursor: isOwned ? 'pointer' : 'default',
                 opacity: isOwned ? 1 : 0.6,
                 aspectRatio: '3/4',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                transition: 'transform 0.2s',
               }}
               onClick={e => !isOwned && e.preventDefault()}
             >
@@ -82,10 +81,42 @@ export default function CollectionList() {
   );
 }
 
-function getRarityColor(rarity: 'N' | 'R' | 'SR') {
+function getRarityStyle(rarity?: 'N' | 'R' | 'SR') {
+  if (!rarity) {
+    return {
+      background: '#eee',
+      border: '1px dashed #aaa',
+      boxShadow: 'none'
+    };
+  }
+
+  const baseStyle = {
+    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+    border: '1px solid #ddd' // Default border
+  };
+
   switch (rarity) {
-    case 'SR': return '#FFD700'; // Gold
-    case 'R': return '#C0C0C0'; // Silver
-    default: return '#e0e0e0'; // Gray/Normal border
+    case 'SR':
+      return {
+        ...baseStyle,
+        background: 'linear-gradient(135deg, #fff 0%, #fff7e6 100%)',
+        border: '2px solid #FFD700',
+        boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4)',
+        transform: 'scale(1.02)'
+      };
+    case 'R':
+      return {
+        ...baseStyle,
+        background: 'linear-gradient(135deg, #fff 0%, #f4f4f4 100%)',
+        border: '2px solid #C0C0C0',
+        boxShadow: '0 4px 10px rgba(192, 192, 192, 0.4)'
+      };
+    case 'N':
+    default:
+      return {
+        ...baseStyle,
+        background: 'white',
+        border: '1px solid #e0e0e0'
+      };
   }
 }
