@@ -38,7 +38,7 @@ export default function CollectionList() {
           <span style={{ fontWeight: 'bold', color: '#A9A9A9' }}>✨ R (Rare)</span>
           <span>3つ以上の文型を取る動詞、または少し注意が必要な動詞。</span>
 
-          <span style={{ fontWeight: 'bold', color: '#666' }}>N (Normal)</span>
+          <span style={{ fontWeight: 'bold', color: '#666' }}>🔷 N (Normal)</span>
           <span>基本的な動詞。まずはここからマスターしよう。</span>
         </div>
       </div>
