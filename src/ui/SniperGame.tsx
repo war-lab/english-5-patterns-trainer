@@ -6,18 +6,11 @@ import { judge } from '../logic/judge';
 import { store } from '../storage/store';
 import { collectionStore } from '../logic/collectionStore';
 import type { Question, Pattern, UserAnswer } from '../domain/types';
+import { PATTERN_LABELS, PATTERN_COLORS } from '../domain/constants';
 
 interface SniperGameProps {
   mode: 'sniper' | 'review';
 }
-
-const PATTERN_LABELS: Record<Pattern, string> = {
-  1: 'SV',
-  2: 'SVC',
-  3: 'SVO',
-  4: 'SVOO',
-  5: 'SVOC'
-};
 
 export default function SniperGame({ mode }: SniperGameProps) {
   const navigate = useNavigate();
@@ -252,7 +245,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
           <div className="feedback-content">
             <div className="feedback-section border-bottom">
               <span className="feedback-label">正解文型</span>
-              <div className="feedback-value">
+              <div className="feedback-value" style={{ color: PATTERN_COLORS[feedback.correctPattern] }}>
                 {PATTERN_LABELS[feedback.correctPattern]}
               </div>
             </div>
@@ -278,7 +271,9 @@ export default function SniperGame({ mode }: SniperGameProps) {
 
       <div className="pattern-grid">
         {([1, 2, 3, 4, 5] as const).map(p => (
-          <button key={p} onClick={() => handleAnswer(p)} className="pattern-btn" disabled={!isRunning}>
+          <button key={p} onClick={() => handleAnswer(p)} className="pattern-btn" disabled={!isRunning}
+            style={{ borderColor: PATTERN_COLORS[p], color: PATTERN_COLORS[p] }}
+          >
             {PATTERN_LABELS[p]}
             <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>[{p}]</div>
           </button>
