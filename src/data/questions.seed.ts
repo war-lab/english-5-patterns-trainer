@@ -29,7 +29,7 @@ export const questions: Question[] = [
   { id: "q0122", sentence: "You speak English.", level: 1, correctPattern: 3, explanation: { overall: "目的語(O)が1つ → SVO" }, tags: ["p:SVO"] },
   { id: "q0123", sentence: "The star shines.", level: 2, correctPattern: 1, explanation: { overall: "動詞だけで完結 → SV" }, tags: ["p:SV"] },
   { id: "q0124", sentence: "She is a nurse.", level: 1, correctPattern: 2, explanation: { overall: "S=Cの関係(be) → SVC" }, tags: ["p:SVC", "v:be"] },
-  { id: "q0125", sentence: "They run fast.", level: 1, correctPattern: 1, explanation: { overall: "fastは副詞(M) → SV" }, tags: ["p:SV", "noise:adv"] },
+  { id: "q0125", sentence: "They run fast.", level: 1, correctPattern: 1, explanation: { overall: "fastは副詞(M) → SV" }, tags: ["p:SV", "noise:adv", "v:run"] },
   { id: "q0126", sentence: "I study hard.", level: 1, correctPattern: 1, explanation: { overall: "hardは副詞(M) → SV" }, tags: ["p:SV", "noise:adv"] },
   { id: "q0127", sentence: "He likes cats.", level: 1, correctPattern: 3, explanation: { overall: "目的語(O)が1つ → SVO" }, tags: ["p:SVO"] },
   { id: "q0029", sentence: "This soup tastes good.", level: 1, correctPattern: 2, explanation: { overall: "S=Cの関係(taste) → SVC" }, tags: ["p:SVC", "v:taste"] },
@@ -84,7 +84,7 @@ export const questions: Question[] = [
   { id: "q0090", sentence: "Leave me alone.", level: 2, correctPattern: 5, explanation: { overall: "O(me)=C(alone)の関係 → SVOC" }, tags: ["p:SVOC", "v:leave"] },
   { id: "q0128", sentence: "She cooks dinner.", level: 2, correctPattern: 3, explanation: { overall: "目的語(O)が1つ → SVO" }, tags: ["p:SVO"] },
   { id: "q0129", sentence: "We sat on the bench.", level: 2, correctPattern: 1, explanation: { overall: "on the benchは修飾語(M) → SV" }, tags: ["p:SV", "noise:pp"] },
-  { id: "q0130", sentence: "He runs every day.", level: 2, correctPattern: 1, explanation: { overall: "every dayは修飾語(M) → SV" }, tags: ["p:SV", "noise:adv"] },
+  { id: "q0130", sentence: "He runs every day.", level: 2, correctPattern: 1, explanation: { overall: "every dayは修飾語(M) → SV" }, tags: ["p:SV", "noise:adv", "v:run"] },
   { id: "q0131", sentence: "They named the baby Ken.", level: 2, correctPattern: 5, explanation: { overall: "O(baby)=C(Ken)の関係 → SVOC" }, tags: ["p:SVOC", "v:name"] },
   { id: "q0132", sentence: "I found the key.", level: 2, correctPattern: 3, explanation: { overall: "目的語(O)が1つ → SVO" }, tags: ["p:SVO"] },
   { id: "q0133", sentence: "She kept the diary.", level: 2, correctPattern: 3, explanation: { overall: "目的語(O)が1つ → SVO" }, tags: ["p:SVO", "v:keep"] },
@@ -93,7 +93,7 @@ export const questions: Question[] = [
   { id: "q0136", sentence: "My uncle gave me this watch.", level: 2, correctPattern: 4, explanation: { overall: "meとthis watchの2重目的語 → SVOO" }, tags: ["p:SVOO", "v:give"] },
 
   // Level 3: Intermediate (Longer, tricky modifiers, SVOC with verbs)
-  { id: "q0006", sentence: "He looked at the picture.", level: 3, correctPattern: 1, explanation: { overall: "at以下は修飾語(M)扱い → SV" }, tags: ["p:SV", "noise:pp"] },
+  { id: "q0006", sentence: "He looked at the picture.", level: 3, correctPattern: 1, explanation: { overall: "at以下は修飾語(M)扱い → SV" }, tags: ["p:SV", "noise:pp", "v:look"] },
   { id: "q0009", sentence: "Please show us the way.", level: 3, correctPattern: 4, explanation: { overall: "us と the way の2目的語 → SVOO" }, tags: ["p:SVOO", "v:show"] },
   { id: "q0020", sentence: "He runs in the park every morning.", level: 3, correctPattern: 1, explanation: { overall: "後ろは全て修飾語(M) → SV" }, tags: ["p:SV", "noise:pp"] },
   { id: "q0032", sentence: "The leaves turned red.", level: 3, correctPattern: 2, explanation: { overall: "S=Cの関係(turn) → SVC" }, tags: ["p:SVC", "v:turn"] },
@@ -197,5 +197,46 @@ export const questions: Question[] = [
   { id: "q0197", sentence: "She smiled a bright smile.", level: 5, correctPattern: 3, explanation: { overall: "同族目的語 (smile a ... smile) → SVO" }, tags: ["p:SVO", "v:smile"] },
   { id: "q0198", sentence: "The box weighs 10 kilograms.", level: 5, correctPattern: 1, explanation: { overall: "weighは自動詞(重さがある)。10kgは副詞的対格(M) → SV" }, tags: ["p:SV", "v:weigh"] },
   { id: "q0199", sentence: "The suit fits you.", level: 5, correctPattern: 3, explanation: { overall: "fitは他動詞(合う) → SVO", trap: "自動詞っぽい意味だが他動詞" }, tags: ["p:SVO", "v:fit"] },
-  { id: "q0200", sentence: "Success awaits you.", level: 5, correctPattern: 3, explanation: { overall: "awaitは他動詞(待つ) → SVO", trap: "wait (自動詞) との混同に注意" }, tags: ["p:SVO", "v:await"] }
+  { id: "q0200", sentence: "Success awaits you.", level: 5, correctPattern: 3, explanation: { overall: "awaitは他動詞(待つ) → SVO", trap: "wait (自動詞) との混同に注意" }, tags: ["p:SVO", "v:await"] },
+
+  // === 動詞一点集中トレーニング用 追加問題 ===
+
+  // run: SV追加（既存はSVO「He runs a hotel.」のみ）
+  { id: "q0201", sentence: "He runs every morning.", level: 1, correctPattern: 1, explanation: { overall: "every morningは修飾語(M) → SV" }, tags: ["p:SV", "noise:adv", "v:run"] },
+  { id: "q0202", sentence: "The river runs through the town.", level: 2, correctPattern: 1, explanation: { overall: "through the townは修飾語(M)。runは「流れる」の自動詞 → SV" }, tags: ["p:SV", "noise:pp", "v:run"] },
+
+  // leave: 各パターン補強
+  { id: "q0203", sentence: "He left early.", level: 2, correctPattern: 1, explanation: { overall: "earlyは副詞(M)。leaveは「出発する」の自動詞 → SV", trap: "leave O (SVO: 去る) との混同に注意" }, tags: ["p:SV", "noise:adv", "v:leave"] },
+  { id: "q0204", sentence: "I left the country last year.", level: 2, correctPattern: 3, explanation: { overall: "the countryが目的語(O)。leaveは「去る」の他動詞 → SVO", trap: "leave for (SV: 向かう) との混同に注意" }, tags: ["p:SVO", "v:leave"] },
+  { id: "q0205", sentence: "Please leave me your number.", level: 3, correctPattern: 4, explanation: { overall: "meとyour numberの2重目的語 → SVOO" }, tags: ["p:SVOO", "v:leave"] },
+  { id: "q0206", sentence: "She left the door open.", level: 3, correctPattern: 5, explanation: { overall: "O(door)=C(open)の関係 → SVOC", trap: "leave the door (SVO) との混同に注意" }, tags: ["p:SVOC", "v:leave"] },
+
+  // get: SVC・SVOO補強
+  { id: "q0207", sentence: "He got tired after work.", level: 2, correctPattern: 2, explanation: { overall: "S=Cの関係(get=〜になる) → SVC" }, tags: ["p:SVC", "v:get"] },
+  { id: "q0208", sentence: "Get me some water.", level: 3, correctPattern: 4, explanation: { overall: "meとsome waterの2重目的語(取ってくる) → SVOO" }, tags: ["p:SVOO", "v:get"] },
+
+  // tell: SVOO・SVOC補強
+  { id: "q0209", sentence: "He told me a funny story.", level: 2, correctPattern: 4, explanation: { overall: "meとa funny storyの2重目的語 → SVOO" }, tags: ["p:SVOO", "v:tell"] },
+  { id: "q0210", sentence: "She told him to wait.", level: 3, correctPattern: 5, explanation: { overall: "O(him)+C(to wait) → SVOC" }, tags: ["p:SVOC", "v:tell", "svoc:to"] },
+
+  // feel: SVC・SVOC補強
+  { id: "q0211", sentence: "I feel happy today.", level: 1, correctPattern: 2, explanation: { overall: "S=Cの関係(feel=〜と感じる) → SVC" }, tags: ["p:SVC", "v:feel"] },
+  { id: "q0212", sentence: "I felt someone touch my shoulder.", level: 4, correctPattern: 5, explanation: { overall: "O(someone)+C(touch: 原形不定詞)。知覚動詞の用法 → SVOC" }, tags: ["p:SVOC", "v:feel", "svoc:bare"] },
+
+  // stand: SV・SVO補強
+  { id: "q0213", sentence: "She stood there quietly.", level: 1, correctPattern: 1, explanation: { overall: "thereとquietlyは修飾語(M) → SV" }, tags: ["p:SV", "noise:adv", "v:stand"] },
+  { id: "q0214", sentence: "I can't stand the noise.", level: 3, correctPattern: 3, explanation: { overall: "standは「我慢する」の他動詞。the noiseが目的語(O) → SVO", trap: "stand(立つ/SV) との混同に注意" }, tags: ["p:SVO", "v:stand"] },
+
+  // look: SV補強
+  { id: "q0215", sentence: "She looked around the room.", level: 2, correctPattern: 1, explanation: { overall: "around the roomは修飾語(M) → SV", trap: "look happy (SVC) との混同に注意" }, tags: ["p:SV", "noise:pp", "v:look"] },
+
+  // make: SVOO補強
+  { id: "q0216", sentence: "She made him a cake.", level: 2, correctPattern: 4, explanation: { overall: "himとa cakeの2重目的語(作ってあげる) → SVOO", trap: "make him happy (SVOC) との混同に注意" }, tags: ["p:SVOO", "v:make"] },
+
+  // find: SVOO補強
+  { id: "q0217", sentence: "Can you find me a good hotel?", level: 3, correctPattern: 4, explanation: { overall: "meとa good hotelの2重目的語(見つけてあげる) → SVOO", trap: "find the hotel nice (SVOC) との混同に注意" }, tags: ["p:SVOO", "v:find"] },
+
+  // keep: SVC・SVO補強
+  { id: "q0218", sentence: "She kept calm during the storm.", level: 2, correctPattern: 2, explanation: { overall: "S=Cの関係(keep=〜の状態を保つ) → SVC", trap: "keep the room clean (SVOC) との混同に注意" }, tags: ["p:SVC", "v:keep"] },
+  { id: "q0219", sentence: "He kept his promise.", level: 2, correctPattern: 3, explanation: { overall: "his promiseが目的語(O) → SVO", trap: "keep silent (SVC) との混同に注意" }, tags: ["p:SVO", "v:keep"] }
 ];

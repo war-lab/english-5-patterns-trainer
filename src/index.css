@@ -165,8 +165,7 @@ button {
 
 .pattern-btn {
   background: var(--surface-color);
-  border: 2px solid var(--primary-color);
-  color: var(--primary-color);
+  border: 2px solid currentColor;
   padding: 1.5rem;
   font-size: 1.3rem;
   border-radius: 12px;
@@ -176,11 +175,16 @@ button {
   align-items: center;
   justify-content: center;
   min-height: 100px;
+  transition: all 0.2s ease;
 }
 
 .pattern-btn:hover {
-  background: var(--primary-color);
-  color: white;
+  background: currentColor;
+  /* ホバー時はボタン内テキストを白に（CSS変数で制御） */
+}
+
+.pattern-btn:hover * {
+  color: white !important;
 }
 
 .pattern-btn:active {
@@ -391,6 +395,372 @@ button {
   color: var(--primary-color);
 }
 
+/* === Verb Focus Training === */
+
+.verb-focus-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--surface-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 16px;
+}
+
+.verb-focus-header .verb-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-right: 10px;
+}
+
+.verb-focus-header .verb-meaning {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.verb-focus-progress {
+  margin-left: auto;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+
+.pattern-map {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 12px;
+  background: var(--surface-color);
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  box-shadow: var(--box-shadow);
+}
+
+.pattern-map-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.pattern-map-item.available {
+  background: #f0f0f0;
+  color: var(--text-secondary);
+}
+
+.pattern-map-item.unavailable {
+  background: transparent;
+  color: #ddd;
+  opacity: 0.4;
+}
+
+.pattern-map-item.correct {
+  background: rgba(46, 204, 113, 0.15);
+  color: var(--success-color);
+}
+
+.pattern-map-item.wrong {
+  background: rgba(231, 76, 60, 0.15);
+  color: var(--error-color);
+}
+
+.pattern-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ddd;
+}
+
+.pattern-dot.active {
+  background: var(--primary-color);
+}
+
+.pattern-dot.correct {
+  background: var(--success-color);
+}
+
+.pattern-dot.wrong {
+  background: var(--error-color);
+}
+
+.comparison-section {
+  margin-top: 16px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.comparison-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.comparison-item {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.comparison-item:last-child {
+  border-bottom: none;
+}
+
+.comparison-pattern-badge {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background: var(--primary-color);
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+.comparison-sentence {
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+.inline-feedback {
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  animation: popScale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.inline-feedback.correct {
+  background: rgba(46, 204, 113, 0.1);
+  border: 2px solid var(--success-color);
+}
+
+.inline-feedback.incorrect {
+  background: rgba(231, 76, 60, 0.1);
+  border: 2px solid var(--error-color);
+}
+
+/* === 動詞選択リスト === */
+.verb-select-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.verb-select-card {
+  padding: 18px 20px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  text-decoration: none;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.verb-select-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--box-shadow-hover);
+}
+
+/* SRカードにシマーアニメーション */
+.verb-select-card--sr::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.12) 50%,
+    transparent 100%
+  );
+  animation: shimmer 3s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* 上段: 名前 + レアリティ + 統計 */
+.verb-select-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.verb-select-identity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.verb-select-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.verb-select-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.verb-select-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.verb-select-stat-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+.verb-select-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+
+.verb-select-stat-divider {
+  width: 1px;
+  height: 16px;
+  background: #ddd;
+}
+
+/* 中段: 意味 */
+.verb-select-meaning {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-top: -2px;
+}
+
+/* 下段: パターンバー */
+.pattern-bar {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.pattern-bar-cell {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.pattern-bar-cell--active {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.pattern-bar-cell--empty {
+  background: #f0f0f0;
+  border-color: #e0e0e0;
+}
+
+.pattern-bar-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #bbb;
+}
+
+/* レアリティバッジ */
+.rarity-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.rarity-badge[data-rarity="SR"] {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: white;
+}
+
+.rarity-badge[data-rarity="R"] {
+  background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+  color: white;
+}
+
+.rarity-badge[data-rarity="N"] {
+  background: #eee;
+  color: #888;
+}
+
+.summary-result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.summary-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface-color);
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.summary-result-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.summary-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.summary-actions .btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity var(--transition-speed);
+}
+
+.summary-actions .btn:hover {
+  opacity: 0.85;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 600px) {
   .app-container {
@@ -455,5 +825,23 @@ button {
     padding: 6px 12px;
     font-size: 0.9rem;
     min-width: 50px;
+  }
+
+  .verb-focus-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .verb-focus-progress {
+    margin-left: 0;
+  }
+
+  .pattern-map {
+    flex-wrap: wrap;
+  }
+
+  .comparison-item {
+    flex-direction: column;
+    gap: 4px;
   }
 }

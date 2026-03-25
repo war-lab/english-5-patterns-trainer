@@ -4,14 +4,7 @@ import { questions } from '../data/questions.seed';
 import { judge } from '../logic/judge';
 import { store } from '../storage/store';
 import type { Question, Pattern, UserAnswer } from '../domain/types';
-
-const PATTERN_LABELS: Record<Pattern, string> = {
-  1: 'SV',
-  2: 'SVC',
-  3: 'SVO',
-  4: 'SVOO',
-  5: 'SVOC'
-};
+import { PATTERN_LABELS, PATTERN_COLORS } from '../domain/constants';
 
 export default function Parse() {
   const [question, setQuestion] = useState<Question | null>(() => questions[Math.floor(Math.random() * questions.length)]);
@@ -114,8 +107,8 @@ export default function Parse() {
             {result.isCorrect ? "正解!" : "不正解!"}
           </h2>
           <div style={{ textAlign: 'left', margin: '1rem 0' }}>
-            <p><strong>あなたの回答:</strong> {PATTERN_LABELS[result.pattern]}</p>
-            <p><strong>正解:</strong> {PATTERN_LABELS[question.correctPattern]}</p>
+            <p><strong>あなたの回答:</strong> <span style={{ color: PATTERN_COLORS[result.pattern], fontWeight: 'bold' }}>{PATTERN_LABELS[result.pattern]}</span></p>
+            <p><strong>正解:</strong> <span style={{ color: PATTERN_COLORS[question.correctPattern], fontWeight: 'bold' }}>{PATTERN_LABELS[question.correctPattern]}</span></p>
             <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.7)', borderRadius: '8px' }}>
               <div><strong>解説:</strong> {result.explanation.overall}</div>
               {result.explanation.trap && (

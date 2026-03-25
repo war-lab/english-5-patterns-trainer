@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom';
 import { store } from '../storage/store';
 import { calculateStats } from '../logic/stats';
 import type { StatsSummary, Pattern } from '../domain/types';
-
-const PATTERN_LABELS: Record<Pattern, string> = {
-  1: 'SV', 2: 'SVC', 3: 'SVO', 4: 'SVOO', 5: 'SVOC'
-};
+import { PATTERN_LABELS, PATTERN_COLORS } from '../domain/constants';
 
 export default function Home() {
   const [stats] = useState<StatsSummary | null>(() => {
@@ -53,6 +50,10 @@ export default function Home() {
           <h3>🔄 復習モード</h3>
           <span>苦手を克服</span>
         </Link>
+        <Link to="/verb-focus" className="menu-item" style={{ background: '#f5f0ff', border: '1px solid #d5ccff' }}>
+          <h3>🎯 動詞一点集中</h3>
+          <span>同じ動詞、違う文型</span>
+        </Link>
         <Link to="/collection" className="menu-item" style={{ background: '#f0f8ff', border: '1px solid #cce5ff' }}>
           <h3>📖 動詞図鑑</h3>
           <span>集めて育てる</span>
@@ -76,9 +77,9 @@ export default function Home() {
                   const s = stats.patternStats[p];
                   const rate = s.total > 0 ? ((s.correct / s.total) * 100).toFixed(0) : '-';
                   return (
-                    <div key={p} style={{ background: '#eee', padding: '5px', borderRadius: '4px', textAlign: 'center', fontSize: '0.9rem' }}>
-                      <div>{PATTERN_LABELS[p]}</div>
-                      <div style={{ fontWeight: 'bold', color: 'var(--primary-color)' }}>{rate}%</div>
+                    <div key={p} style={{ background: `${PATTERN_COLORS[p]}12`, padding: '5px', borderRadius: '4px', textAlign: 'center', fontSize: '0.9rem', borderBottom: `3px solid ${PATTERN_COLORS[p]}` }}>
+                      <div style={{ fontWeight: 'bold', color: PATTERN_COLORS[p] }}>{PATTERN_LABELS[p]}</div>
+                      <div style={{ fontWeight: 'bold', color: '#333' }}>{rate}%</div>
                     </div>
                   );
                 })}
