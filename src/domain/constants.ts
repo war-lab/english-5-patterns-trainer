@@ -9,13 +9,13 @@ export const PATTERN_LABELS: Record<Pattern, string> = {
   5: 'SVOC'
 };
 
-// 文型カラーコード（全画面統一）
+// 文型カラーコード — ネオンアーケードパレット
 export const PATTERN_COLORS: Record<Pattern, string> = {
-  1: '#4A90E2', // SV — 青（シンプル）
-  2: '#2ecc71', // SVC — 緑（補語）
-  3: '#F5A623', // SVO — 橙（目的語）
-  4: '#9B59B6', // SVOO — 紫（二重目的語）
-  5: '#e74c3c', // SVOC — 赤（目的語+補語）
+  1: '#4488ff', // SV — ネオンブルー
+  2: '#00ff88', // SVC — ネオングリーン
+  3: '#ffaa00', // SVO — ネオンオレンジ
+  4: '#cc66ff', // SVOO — ネオンパープル
+  5: '#ff4466', // SVOC — ネオンレッド
 };
 
 // レアリティの表示順ソート用（高い方が先）

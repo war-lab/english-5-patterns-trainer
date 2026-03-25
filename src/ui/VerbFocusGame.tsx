@@ -37,7 +37,7 @@ export default function VerbFocusGame() {
   const [feedback, setFeedback] = useState<FeedbackState | null>(null);
   const [startTime, setStartTime] = useState(0);
 
-  // マルチパターン動詞リスト（初回のみ計算）
+  // マルチパターン動詞リスト
   const multiPatternVerbs = useMemo(() => getMultiPatternVerbs(), []);
 
   // 動詞選択 → プレイ開始
@@ -66,7 +66,6 @@ export default function VerbFocusGame() {
     const timeTaken = Date.now() - startTime;
     const isCorrect = q.correctPattern === chosenPattern;
 
-    // 回答を保存
     const answer: UserAnswer = {
       questionId: q.id,
       chosenPattern,
@@ -90,12 +89,10 @@ export default function VerbFocusGame() {
 
     // パターンマップ更新
     const newStatus = { ...session.patternStatus };
-    // 同じパターンの問題が複数ある場合、wrongを上書きしない
     if (newStatus[q.correctPattern] !== 'wrong') {
       newStatus[q.correctPattern] = isCorrect ? 'correct' : 'wrong';
     }
 
-    // 比較例文取得
     const comparisons = getComparisonExamples(session.verb, q.correctPattern);
 
     setSession(prev => prev ? {
@@ -127,13 +124,11 @@ export default function VerbFocusGame() {
     }
   }, [session]);
 
-  // もう一度（同じ動詞）
   const handleRetry = useCallback(() => {
     if (!session) return;
     handleSelectVerb(session.verb);
   }, [session, handleSelectVerb]);
 
-  // 動詞選択に戻る
   const handleSelectNew = useCallback(() => {
     setSession(null);
     setFeedback(null);
@@ -145,18 +140,15 @@ export default function VerbFocusGame() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (phase === 'select') return;
 
-      // Escape: 動詞選択に戻る
       if (e.key === 'Escape') {
         handleSelectNew();
         return;
       }
 
       if (phase === 'playing') {
-        // 1-5: パターン選択（フィードバック表示中は無効）
         if (!feedback && ['1', '2', '3', '4', '5'].includes(e.key)) {
           handleAnswer(Number(e.key) as Pattern);
         }
-        // Enter: 次へ（フィードバック表示中のみ）
         if (e.key === 'Enter' && feedback) {
           handleNext();
         }
@@ -172,11 +164,11 @@ export default function VerbFocusGame() {
     return (
       <div className="game-container">
         <div className="nav-header">
-          <button onClick={() => navigate('/')} className="nav-link">← ホーム</button>
+          <button onClick={() => navigate('/')} className="nav-link">← HOME</button>
         </div>
-        <h2 style={{ textAlign: 'center', marginBottom: '16px' }}>動詞一点集中トレーニング</h2>
-        <p style={{ textAlign: 'center', color: '#666', marginBottom: '20px', fontSize: '0.9rem' }}>
-          1つの動詞で全文型を体感する
+        <h2 style={{ textAlign: 'center', marginBottom: '12px', fontFamily: 'var(--font-pixel)', fontSize: '0.75rem', color: 'var(--secondary-color)', textShadow: '0 0 6px rgba(0, 204, 255, 0.3)' }}>VERB FOCUS</h2>
+        <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '16px', fontSize: '0.85rem' }}>
+          1つの動詞で全文型を体感せよ
         </p>
         <VerbFocusSelect verbs={multiPatternVerbs} onSelect={handleSelectVerb} />
       </div>
@@ -188,7 +180,7 @@ export default function VerbFocusGame() {
     return (
       <div className="game-container">
         <div className="nav-header">
-          <button onClick={handleSelectNew} className="nav-link">← 動詞選択</button>
+          <button onClick={handleSelectNew} className="nav-link">← SELECT</button>
         </div>
         <VerbFocusSummary
           verbId={session.verb.verbId}
@@ -211,9 +203,8 @@ export default function VerbFocusGame() {
 
   return (
     <div className="game-container">
-      {/* ナビゲーション */}
       <div className="nav-header">
-        <button onClick={handleSelectNew} className="nav-link">← 動詞選択</button>
+        <button onClick={handleSelectNew} className="nav-link">← SELECT</button>
       </div>
 
       {/* 動詞ヘッダー */}
@@ -234,11 +225,11 @@ export default function VerbFocusGame() {
       />
 
       {/* 問題文 */}
-      <div className="card question-card" style={{ marginBottom: '16px' }}>
+      <div className="card question-card" style={{ marginBottom: '14px' }}>
         {currentQuestion.sentence}
       </div>
 
-      {/* フィードバックがない場合: パターンボタン */}
+      {/* パターンボタン */}
       {!feedback && (
         <div className="pattern-grid">
           {([1, 2, 3, 4, 5] as Pattern[]).map(p => (
@@ -249,30 +240,29 @@ export default function VerbFocusGame() {
               style={{ borderColor: PATTERN_COLORS[p], color: PATTERN_COLORS[p] }}
             >
               {PATTERN_LABELS[p]}
-              <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>[{p}]</div>
+              <div style={{ fontSize: '0.6rem', opacity: 0.7, fontFamily: 'var(--font-pixel)' }}>[{p}]</div>
             </button>
           ))}
         </div>
       )}
 
-      {/* フィードバック（インライン表示） */}
+      {/* インラインフィードバック */}
       {feedback && (
         <div className={`inline-feedback ${feedback.isCorrect ? 'correct' : 'incorrect'}`}>
-          {/* 正誤ヘッダー */}
-          <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '12px' }}>
-            {feedback.isCorrect ? '\u2705' : '\u274C'}{' '}
-            {feedback.isCorrect ? '正解！' : '不正解...'}{' '}
-            <span style={{ color: PATTERN_COLORS[feedback.correctPattern] }}>
+          <div style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '10px' }}>
+            <span style={{ color: feedback.isCorrect ? 'var(--success-color)' : 'var(--error-color)' }}>
+              {feedback.isCorrect ? 'CORRECT!' : 'WRONG...'}
+            </span>{' '}
+            <span style={{ color: PATTERN_COLORS[feedback.correctPattern], fontFamily: 'var(--font-pixel)', fontSize: '0.75rem', textShadow: `0 0 6px ${PATTERN_COLORS[feedback.correctPattern]}66` }}>
               {PATTERN_LABELS[feedback.correctPattern]}
             </span>
           </div>
 
-          {/* 解説 */}
-          <div style={{ marginBottom: '12px', fontSize: '0.95rem' }}>
+          <div style={{ marginBottom: '10px', fontSize: '0.9rem', color: 'var(--text-color)' }}>
             {feedback.explanation.overall}
           </div>
           {feedback.explanation.trap && (
-            <div className="feedback-trap" style={{ marginBottom: '12px' }}>
+            <div className="feedback-trap" style={{ marginBottom: '10px' }}>
               {feedback.explanation.trap}
             </div>
           )}
@@ -280,15 +270,18 @@ export default function VerbFocusGame() {
           {/* コレクション通知 */}
           {feedback.collectionUpdate && (
             <div style={{
-              padding: '8px 12px',
-              background: 'rgba(245, 166, 35, 0.15)',
-              borderRadius: '8px',
-              marginBottom: '12px',
-              fontSize: '0.9rem',
+              padding: '6px 12px',
+              background: 'rgba(255, 215, 0, 0.1)',
+              border: '1px solid rgba(255, 215, 0, 0.3)',
+              marginBottom: '10px',
+              fontSize: '0.85rem',
+              color: '#FFD700',
+              fontWeight: 'bold',
+              textShadow: '0 0 6px rgba(255, 215, 0, 0.4)',
               animation: 'popScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
             }}>
               {feedback.collectionUpdate.unlocked && (
-                <span>NEW カード解放: {feedback.collectionUpdate.verbId}</span>
+                <span>NEW CARD: {feedback.collectionUpdate.verbId}</span>
               )}
               {feedback.collectionUpdate.leveUp && (
                 <span>LEVEL UP: {feedback.collectionUpdate.verbId}</span>
@@ -299,7 +292,7 @@ export default function VerbFocusGame() {
           {/* 比較セクション */}
           {feedback.comparisonExamples.length > 0 && (
             <div className="comparison-section">
-              <h4>比べてみよう — 同じ {session.verb.verbId} でも…</h4>
+              <h4>同じ {session.verb.verbId} でも...</h4>
               {feedback.comparisonExamples.map(({ pattern, example }) => (
                 <div key={pattern} className="comparison-item">
                   <span className="comparison-pattern-badge" style={{ background: PATTERN_COLORS[pattern] }}>
@@ -311,14 +304,13 @@ export default function VerbFocusGame() {
             </div>
           )}
 
-          {/* 次へボタン */}
           <button
             onClick={handleNext}
             className="next-btn"
-            style={{ marginTop: '16px', width: '100%' }}
+            style={{ marginTop: '14px', width: '100%' }}
           >
-            {session.currentIndex + 1 >= session.questions.length ? '結果を見る' : '次へ →'}
-            <span style={{ fontSize: '0.8rem', opacity: 0.7, marginLeft: '8px' }}>[Enter]</span>
+            {session.currentIndex + 1 >= session.questions.length ? 'RESULT' : 'NEXT →'}
+            <span style={{ fontSize: '0.6rem', opacity: 0.7, marginLeft: '8px', fontFamily: 'var(--font-pixel)' }}>[Enter]</span>
           </button>
         </div>
       )}
