@@ -37,7 +37,9 @@ english-5-patterns-trainer/
     *   回答直後に正誤だけでなく、「S=Cの関係」「Oが2つ」といった簡潔な根拠を表示し、思考の修正を促します。
 3.  **Data-Driven Review (データ駆動の復習)**
     *   「なんとなく間違えた」を放置せず、混同行列 (Confusion Matrix) を用いて「SVOとSVOOを間違えやすい」といった傾向を可視化し、アルゴリズムが弱点を重点的に攻撃します。
-4.  **Localized & Accessible (日本語準拠)**
+4.  **Retro Arcade Visual (レトロアーケードUI)**
+    *   ダークテーマ + ネオンカラー + ピクセルフォント + CRTスキャンラインによるレトロゲーム風ビジュアルで、学習のゲーム体験を向上させています。詳細は `docs/RETRO_UI_DESIGN.md` を参照。
+5.  **Localized & Accessible (日本語準拠)**
     *   日本人の英語学習者に特化し、UIテキストから解説、ドキュメントに至るまで完全日本語化を行っています。
 
 ## 🚀 始め方 (Getting Started)

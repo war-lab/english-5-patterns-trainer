@@ -46,7 +46,6 @@ export default function SniperGame({ mode }: SniperGameProps) {
   } | null>(null);
 
   const location = useLocation();
-  // In deck mode, maybe default to faster speed? For now keep same.
   const limitMs = (location.state as { limitMs?: number })?.limitMs ?? 2000;
   const [timeLeft, setTimeLeft] = useState(limitMs);
   const [isRunning, setIsRunning] = useState(true);
@@ -55,7 +54,6 @@ export default function SniperGame({ mode }: SniperGameProps) {
   const saveResult = useCallback((isCorrect: boolean, timeMs: number, chosen: Pattern) => {
     if (!question) return;
 
-    // 1. Save normal stats
     // eslint-disable-next-line react-hooks/purity
     const timestamp = Date.now();
     const answer: UserAnswer = {
@@ -68,15 +66,12 @@ export default function SniperGame({ mode }: SniperGameProps) {
     };
     store.appendAnswer(answer);
 
-    // 2. Collection Progress (Unlock / XP)
-    // Find the verb tag for this question (starts with v:)
+    // コレクション更新
     const verbTag = question.tags.find(t => t.startsWith('v:'));
     let collectionUpdate = undefined;
 
     if (verbTag) {
-      const verbId = verbTag.substring(2); // remove "v:"
-      // We process updates even if incorrect (to record "weakness" - implemented as history.wrong)
-      // addProgress handles both correct/incorrect logic
+      const verbId = verbTag.substring(2);
       const result = collectionStore.addProgress(verbId, isCorrect);
 
       if (isCorrect && (result.unlocked || result.leveUp)) {
@@ -92,7 +87,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
     let q: Question;
 
     if (availableQuestions.length === 0) {
-      navigate('/'); // Safety fallback
+      navigate('/');
       return;
     }
 
@@ -113,10 +108,9 @@ export default function SniperGame({ mode }: SniperGameProps) {
     saveResult(false, limitMs, 1 as Pattern);
     setFeedback({
       isCorrect: false,
-      explanation: question?.explanation || { overall: "時間切れ" },
+      explanation: question?.explanation || { overall: "TIME UP" },
       correctPattern: question?.correctPattern as Pattern
     });
-    // No auto-advance
   }, [question, saveResult, limitMs]);
 
   const handleAnswer = useCallback((p: Pattern) => {
@@ -134,10 +128,9 @@ export default function SniperGame({ mode }: SniperGameProps) {
       correctPattern: question.correctPattern,
       collectionUpdate: update
     });
-    // No auto-advance
   }, [isRunning, question, startTime, saveResult]);
 
-  // Timer
+  // タイマー
   useEffect(() => {
     if (!isRunning) return;
     const interval = setInterval(() => {
@@ -152,14 +145,11 @@ export default function SniperGame({ mode }: SniperGameProps) {
     return () => clearInterval(interval);
   }, [isRunning, handleTimeout]);
 
-  // Keyboard support
+  // キーボードサポート
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Escape to quit
       if (e.key === 'Escape') {
         if (deckFilter) {
-          // If in training mode, go back to detail or list? 
-          // Going back 1 step is safer.
           navigate(-1);
         } else {
           navigate('/');
@@ -167,14 +157,12 @@ export default function SniperGame({ mode }: SniperGameProps) {
         return;
       }
 
-      // 1-5 for answering
       if (isRunning && !feedback) {
         if (['1', '2', '3', '4', '5'].includes(e.key)) {
           handleAnswer(Number(e.key) as Pattern);
         }
       }
 
-      // Enter for next (only when feedback is shown)
       if (e.key === 'Enter' && feedback) {
         loadNextQuestion();
       }
@@ -188,32 +176,54 @@ export default function SniperGame({ mode }: SniperGameProps) {
     return (
       <div className="game-container">
         <div className="card">
-          <p>該当する問題がありません。</p>
+          <p>該当する問題がないでござる。</p>
           <button onClick={() => navigate(-1)} className="next-btn">戻る</button>
         </div>
       </div>
     );
   }
 
+  // タイマーバーの色
+  const timerRatio = timeLeft / limitMs;
+  const timerColor = timerRatio < 0.2 ? 'var(--error-color)' : timerRatio < 0.5 ? 'var(--warning-color)' : 'var(--primary-color)';
+  const timerGlow = timerRatio < 0.2 ? '0 0 8px rgba(255, 68, 68, 0.5)' : timerRatio < 0.5 ? '0 0 8px rgba(255, 221, 0, 0.5)' : '0 0 8px rgba(0, 255, 136, 0.3)';
+
   return (
     <div className="game-container">
       <div className="nav-header">
-        <button onClick={() => deckFilter ? navigate(-1) : navigate('/')} className="nav-link" style={{ background: 'none', border: 'none', fontSize: '1rem', cursor: 'pointer' }}>
-          ← 戻る (Esc)
+        <button onClick={() => deckFilter ? navigate(-1) : navigate('/')} className="nav-link">
+          ← BACK [Esc]
         </button>
-        <span style={{ fontWeight: 'bold', color: '#666' }}>
-          {deckFilter ? `特訓: ${deckFilter}` : (mode === 'sniper' ? 'モード: スナイパー' : 'モード: 復習')}
+        <span style={{ fontWeight: 'bold', color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', fontSize: '0.65rem', textShadow: '0 0 6px rgba(0, 204, 255, 0.3)' }}>
+          {deckFilter ? `DRILL: ${deckFilter}` : (mode === 'sniper' ? 'SNIPER' : 'REVIEW')}
         </span>
       </div>
 
-      <div style={{ marginBottom: '20px' }}>
-        <div style={{ height: '8px', background: '#eee', borderRadius: '4px', overflow: 'hidden' }}>
+      {/* タイマーバー */}
+      <div style={{ marginBottom: '16px' }}>
+        <div style={{
+          height: '8px',
+          background: 'var(--surface-light)',
+          border: '1px solid var(--surface-border)',
+          overflow: 'hidden'
+        }}>
           <div style={{
             height: '100%',
-            width: `${(timeLeft / limitMs) * 100}%`,
-            background: timeLeft < 500 ? 'var(--error-color)' : 'var(--success-color)',
+            width: `${timerRatio * 100}%`,
+            background: timerColor,
+            boxShadow: timerGlow,
             transition: 'width 0.1s linear'
           }} />
+        </div>
+        <div style={{
+          textAlign: 'right',
+          fontSize: '0.6rem',
+          fontFamily: 'var(--font-pixel)',
+          color: timerColor,
+          marginTop: '4px',
+          textShadow: `0 0 4px ${timerColor}`
+        }}>
+          {(timeLeft / 1000).toFixed(1)}s
         </div>
       </div>
 
@@ -224,20 +234,23 @@ export default function SniperGame({ mode }: SniperGameProps) {
       {feedback && (
         <div className={`feedback-overlay ${feedback.isCorrect ? 'correct' : 'incorrect'}`}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h2 className="feedback-title">{feedback.isCorrect ? "正解!" : "不正解..."}</h2>
+            <h2 className="feedback-title">
+              {feedback.isCorrect ? "CORRECT!" : "WRONG..."}
+            </h2>
             {feedback.collectionUpdate && (
               <div style={{
-                background: 'rgba(255,255,255,0.9)',
-                padding: '8px 16px',
-                borderRadius: '20px',
+                background: 'rgba(255, 215, 0, 0.15)',
+                padding: '6px 16px',
+                border: '2px solid rgba(255, 215, 0, 0.4)',
                 marginBottom: '10px',
-                color: '#d32f2f',
+                color: '#FFD700',
                 fontWeight: 'bold',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                fontSize: '0.85rem',
+                textShadow: '0 0 6px rgba(255, 215, 0, 0.5)',
                 animation: 'popScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
               }}>
-                {feedback.collectionUpdate.unlocked ? `✨ New Card: ${feedback.collectionUpdate.verbId}!` :
-                  feedback.collectionUpdate.leveUp ? `🆙 ${feedback.collectionUpdate.verbId} Level Up!` : ''}
+                {feedback.collectionUpdate.unlocked ? `NEW CARD: ${feedback.collectionUpdate.verbId}!` :
+                  feedback.collectionUpdate.leveUp ? `LEVEL UP: ${feedback.collectionUpdate.verbId}!` : ''}
               </div>
             )}
           </div>
@@ -245,26 +258,26 @@ export default function SniperGame({ mode }: SniperGameProps) {
           <div className="feedback-content">
             <div className="feedback-section border-bottom">
               <span className="feedback-label">正解文型</span>
-              <div className="feedback-value" style={{ color: PATTERN_COLORS[feedback.correctPattern] }}>
+              <div className="feedback-value" style={{ color: PATTERN_COLORS[feedback.correctPattern], textShadow: `0 0 8px ${PATTERN_COLORS[feedback.correctPattern]}66` }}>
                 {PATTERN_LABELS[feedback.correctPattern]}
               </div>
             </div>
 
             <div className="feedback-section">
-              <div style={{ fontWeight: 'bold', color: '#555', marginBottom: '5px' }}>💡 解説</div>
+              <div style={{ fontWeight: 'bold', color: 'var(--secondary-color)', marginBottom: '6px', fontSize: '0.85rem' }}>HINT</div>
               <div className="feedback-text">{feedback.explanation.overall}</div>
             </div>
 
             {feedback.explanation.trap && (
               <div className="feedback-trap">
-                <div className="trap-header">⚠️ 引っかけポイント</div>
-                <div style={{ fontSize: '1rem' }}>{feedback.explanation.trap}</div>
+                <div className="trap-header">TRAP POINT</div>
+                <div style={{ fontSize: '0.95rem', color: 'var(--text-color)' }}>{feedback.explanation.trap}</div>
               </div>
             )}
           </div>
 
           <button onClick={loadNextQuestion} className="next-btn">
-            次へ (Enter)
+            NEXT [Enter]
           </button>
         </div>
       )}
@@ -275,7 +288,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
             style={{ borderColor: PATTERN_COLORS[p], color: PATTERN_COLORS[p] }}
           >
             {PATTERN_LABELS[p]}
-            <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>[{p}]</div>
+            <div style={{ fontSize: '0.6rem', opacity: 0.7, fontFamily: 'var(--font-pixel)' }}>[{p}]</div>
           </button>
         ))}
       </div>
