@@ -50,6 +50,10 @@ export default function Home() {
             START
           </Link>
         </div>
+        <Link to="/scene" className="menu-item">
+          <h3 style={{ color: 'var(--warning-color)', textShadow: '0 0 8px rgba(255, 221, 0, 0.4)' }}>SCENE MODE <span style={{ fontSize: '0.6rem', color: 'var(--accent-color)' }}>★NEW</span></h3>
+          <span>意味で見抜け</span>
+        </Link>
         <Link to="/parse" className="menu-item">
           <h3>PARSE MODE</h3>
           <span>V-O-Cを判別せよ</span>

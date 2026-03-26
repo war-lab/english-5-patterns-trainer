@@ -1,5 +1,8 @@
 export type Pattern = 1 | 2 | 3 | 4 | 5;
 
+/** 意味カテゴリ（場面タイプ） */
+export type SceneType = 'action' | 'state' | 'affect' | 'transfer' | 'transform';
+
 export interface Question {
   id: string;
   sentence: string;
@@ -10,6 +13,9 @@ export interface Question {
     trap?: string;   // Potential trap or confusion point
   };
   tags: string[];
+
+  /** Scene Mode用: この文で「何が起きているか」の日本語描写 */
+  sceneDescription?: string;
 }
 
 export interface UserAnswer {
@@ -19,6 +25,13 @@ export interface UserAnswer {
   isCorrect: boolean;
   timeMs: number;
   timestamp: number;
+
+  /** Scene Modeの場合のみ: ユーザーが選んだ意味カテゴリ */
+  chosenScene?: SceneType;
+  /** Scene Modeの場合のみ: 正解の意味カテゴリ */
+  correctScene?: SceneType;
+  /** Scene Modeの場合のみ: 意味カテゴリの正誤 */
+  isSceneCorrect?: boolean;
 }
 
 export interface Settings {

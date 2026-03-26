@@ -1,4 +1,4 @@
-import type { Pattern } from './types';
+import type { Pattern, SceneType } from './types';
 
 // 文型のラベル（共通定数）
 export const PATTERN_LABELS: Record<Pattern, string> = {
@@ -23,4 +23,42 @@ export const RARITY_ORDER: Record<string, number> = {
   SR: 3,
   R: 2,
   N: 1,
+};
+
+// --- Scene Mode 定数 ---
+
+/** Pattern → SceneType マッピング（自動導出用） */
+export const SCENE_TYPE_MAP: Record<Pattern, SceneType> = {
+  1: 'action',
+  2: 'state',
+  3: 'affect',
+  4: 'transfer',
+  5: 'transform',
+};
+
+/** 意味カテゴリのラベル定義 */
+export const SCENE_LABELS: Record<SceneType, { short: string; full: string }> = {
+  action:    { short: '動作だけ',       full: '主語が動いている／いるだけ。必須の対象なし' },
+  state:     { short: '状態・性質',     full: '主語がどんな状態か、何者かを表している' },
+  affect:    { short: '対象に作用',     full: '主語が何かに対して作用している' },
+  transfer:  { short: '渡す・与える',   full: '誰かに何かを渡している／与えている' },
+  transform: { short: '対象をどうする', full: '対象を変える・保つ・そう認識する' },
+};
+
+/** SceneType → Pattern の逆引き */
+export const SCENE_TO_PATTERN: Record<SceneType, Pattern> = {
+  action: 1,
+  state: 2,
+  affect: 3,
+  transfer: 4,
+  transform: 5,
+};
+
+/** 意味カテゴリのASCIIアイコン */
+export const SCENE_ICONS: Record<SceneType, string> = {
+  action:    '>>',
+  state:     '==',
+  affect:    '->',
+  transfer:  '=>',
+  transform: '<>',
 };
