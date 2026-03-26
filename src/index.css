@@ -1091,4 +1091,310 @@ button {
   .verb-select-name {
     font-size: 1rem;
   }
+
+  .scene-card {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .scene-card-name {
+    font-size: 0.85rem;
+  }
+
+  .phase-indicator {
+    padding: 8px 12px;
+  }
+
+  .phase-label {
+    font-size: 0.45rem;
+  }
+}
+
+/* ===================================
+   Scene Mode
+   =================================== */
+
+/* フェーズインジケーター */
+.phase-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 12px 20px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.phase-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.phase-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid;
+  transition: all 0.3s ease;
+}
+
+.phase-dot.active {
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor, 0 0 16px currentColor;
+  animation: neonPulse 2s ease-in-out infinite;
+}
+
+.phase-dot.scan-active {
+  color: var(--warning-color);
+  border-color: var(--warning-color);
+}
+
+.phase-dot.lock-active {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.phase-dot.completed {
+  background: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.phase-dot.pending {
+  background: transparent;
+  border-color: #333355;
+}
+
+.phase-line {
+  flex: 1;
+  height: 2px;
+  background: #333355;
+  margin: 0 8px;
+  max-width: 120px;
+  position: relative;
+  align-self: center;
+  margin-bottom: 18px;
+}
+
+.phase-line.filled::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--success-color);
+  box-shadow: 0 0 6px var(--success-color);
+  animation: lineFill 0.4s ease forwards;
+}
+
+@keyframes lineFill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.phase-label {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  margin-top: 4px;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+/* セッション統計 */
+.scene-session-stats {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-family: var(--font-pixel);
+  font-size: 0.45rem;
+  color: var(--secondary-color);
+}
+
+.perfect-streak {
+  color: var(--warning-color);
+  text-shadow: 0 0 4px rgba(255, 221, 0, 0.3);
+}
+
+/* スキャンカード */
+.scene-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scene-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface-color);
+  border: 2px solid var(--surface-border);
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--text-color);
+}
+
+.scene-card:hover {
+  border-color: var(--warning-color);
+  border-left-color: var(--warning-color);
+  background: var(--surface-light);
+}
+
+.scene-card-icon {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: var(--warning-color);
+  min-width: 28px;
+  text-align: center;
+}
+
+.scene-card-name {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  flex: 1;
+}
+
+.scene-card-key {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  color: #555577;
+}
+
+.scene-card.selected {
+  border-color: var(--warning-color);
+  border-left-color: var(--warning-color);
+  background: rgba(255, 221, 0, 0.08);
+}
+
+/* ロック済み表示 */
+.scene-locked {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+  border: 1px solid;
+}
+
+.scene-locked.correct {
+  background: rgba(0, 255, 136, 0.05);
+  border-color: rgba(0, 255, 136, 0.3);
+}
+
+.scene-locked.wrong {
+  background: rgba(255, 68, 68, 0.05);
+  border-color: rgba(255, 68, 68, 0.3);
+}
+
+.scene-locked-badge {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  text-shadow: 0 0 4px currentColor;
+}
+
+.scene-locked-icon {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: var(--warning-color);
+}
+
+.scene-locked-name {
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+/* LOCK ON 演出 */
+.lock-on-pattern {
+  font-family: var(--font-pixel);
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+  animation: popScale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.lock-on-connection {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+.lock-on-connection .scene-icon {
+  color: var(--warning-color);
+  font-family: var(--font-pixel);
+}
+
+.lock-on-connection .arrow {
+  color: var(--text-secondary);
+}
+
+.lock-on-connection .pattern-name {
+  font-family: var(--font-pixel);
+  font-weight: bold;
+}
+
+/* RECOVER プロンプト */
+.recover-prompt {
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  color: var(--secondary-color);
+  text-shadow: 0 0 6px rgba(0, 204, 255, 0.4);
+  text-align: center;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.recover-sub {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* フィードバック共通パーツ */
+.scene-hint {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 8px 0;
+  border-top: 1px solid var(--surface-border);
+  margin-top: 8px;
+  text-align: center;
+}
+
+.answer-compare {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 0.9rem;
+}
+
+.answer-compare-label {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  min-width: 48px;
+}
+
+.answer-compare-wrong {
+  color: var(--error-color);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.answer-compare-correct {
+  color: var(--success-color);
+  font-weight: bold;
 }

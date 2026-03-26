@@ -1,5 +1,86 @@
 # Release Notes
 
+## v1.4.0 - Scene Mode（意味で見抜け）
+
+### 概要
+
+新モード「SCENE MODE」を追加。
+英文を見たときに「何が起きているか」を日本語で判断し、そこから文型を導き出す——
+「意味理解 → 構造認識」という本来の思考順序を鍛えるモード。
+
+### なぜ作ったか
+
+既存モードでは「文型ラベルを当てる」ことがゴールになっていた。
+しかし本来の英語力は、文を見て「何が起きてるか」を掴めることが起点になる。
+
+```
+意味理解（何が起きてる？） → 構造認識（だからこの文型） → ラベル付け（SVO等）
+```
+
+Scene Mode はこの最初のステップ——「意味理解」を意識的に行わせることで、
+文型判定を「暗記」ではなく「理解」に昇華させる。
+
+### 遊び方
+
+1. **SCAN フェーズ**: 英文を見て「何が起きてるか」を5つの意味カテゴリから選ぶ
+   - `>>` 動作だけ（SV）
+   - `==` 状態・性質（SVC）
+   - `->` 対象に作用（SVO）
+   - `=>` 渡す・与える（SVOO）
+   - `<>` 対象をどうする（SVOC）
+2. **LOCK フェーズ**: 意味カテゴリが正しければ文型を自動導出（LOCK ON 演出）。間違った場合は文型選択のリカバリーチャンス
+3. **RESULT**: 3段階のフィードバック
+   - **PERFECT**: 意味も文型も正解（+10 XP）
+   - **PARTIAL**: 意味は外したが文型は正解（+5 XP）
+   - **WRONG**: 両方不正解（0 XP）
+
+### 出題ロジック
+
+- ランダム出題をベースに、直前の誤答から「ユーザーが何を何と間違えたか」を検出
+- 50%の確率で誤分類ペア（正解パターン vs 誤選択パターン）から追撃出題
+- 直近5問は再出題しない
+
+### 既存モードとの違い
+
+| モード | 鍛える力 | Scene Mode との違い |
+|--------|---------|-------------------|
+| Sniper | 反射速度（ラベル即答） | 意味を飛ばしてラベル直行 |
+| Parse | 構造分析（O数・C有無） | 文法用語ベースの分析 |
+| Review | 弱点克服（反復） | 出題選択の違いのみ |
+| Verb Focus | 動詞の多面性理解 | 動詞限定で文全体でない |
+| **Scene** | **意味→構造の思考回路** | **日本語的意味理解が起点** |
+
+### 主な変更点
+
+*   **新規ファイル**
+    | ファイル | 役割 |
+    |---------|------|
+    | `src/logic/sceneLogic.ts` | 弱点追撃型出題ロジック + 判定ロジック |
+    | `src/ui/SceneGame.tsx` | 3フェーズUI（SCAN / LOCK / RESULT） |
+    | `src/pages/Scene.tsx` | Scene Mode 入口ページ |
+
+*   **変更ファイル**
+    | ファイル | 変更内容 |
+    |---------|---------|
+    | `src/domain/types.ts` | `SceneType` 型追加、`Question.sceneDescription` 追加、`UserAnswer` 拡張 |
+    | `src/domain/constants.ts` | `SCENE_TYPE_MAP`, `SCENE_LABELS`, `SCENE_TO_PATTERN`, `SCENE_ICONS` 追加 |
+    | `src/data/questions/level1.ts` | 全160問に `sceneDescription` 追加 |
+    | `src/data/questions/level2.ts` | 全245問に `sceneDescription` 追加 |
+    | `src/logic/collectionStore.ts` | `addProgress` にカスタム経験値量（PARTIAL=5XP）対応 |
+    | `src/App.tsx` | `/scene` ルート追加 |
+    | `src/pages/Home.tsx` | SCENE MODE メニュー追加（★NEW バッジ付き） |
+    | `src/index.css` | Scene Mode 用 CSS 追加 |
+
+*   **データ量**: Level 1〜2 の計405問に `sceneDescription`（日本語場面描写）を付与。文法用語を使わず30文字以内で統一
+
+*   **統計の互換性**: `isCorrect` は文型の正誤のみで判定（既存モードと同じ基準）。Scene 固有の意味理解精度は `isSceneCorrect` で独立管理。Home画面の正答率・混同行列は既存モードと横断比較可能
+
+### 設計仕様
+
+詳細な設計書は `docs/SCENE_MODE_DESIGN.md` を参照。
+
+---
+
 ## v1.3.0 - Retro Arcade UI Overhaul
 
 ### 概要

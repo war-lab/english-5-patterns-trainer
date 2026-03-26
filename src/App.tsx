@@ -6,6 +6,7 @@ import Parse from './pages/Parse';
 import CollectionList from './pages/CollectionList';
 import CollectionDetail from './pages/CollectionDetail';
 import VerbFocus from './pages/VerbFocus';
+import Scene from './pages/Scene';
 
 // Layout component can be defined inline or imported. 
 // For now I'll use a wrapper in App or separate file. 
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/collection" element={<CollectionList />} />
           <Route path="/collection/:verbId" element={<CollectionDetail />} />
           <Route path="/verb-focus" element={<VerbFocus />} />
+          <Route path="/scene" element={<Scene />} />
         </Routes>
       </div>
     </BrowserRouter>

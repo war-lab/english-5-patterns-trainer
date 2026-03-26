@@ -29,7 +29,7 @@ export const collectionStore = {
 
   // Called when a user gets a correct answer for a verb
   // Returns true if a new level was reached or new card unlocked
-  addProgress(verbId: string, isCorrect: boolean): { unlocked: boolean; leveUp: boolean } {
+  addProgress(verbId: string, isCorrect: boolean, expAmount?: number): { unlocked: boolean; leveUp: boolean } {
     if (!VERB_DATA[verbId]) return { unlocked: false, leveUp: false }; // Unknown verb
 
     const collection = this.getCollection();
@@ -53,9 +53,9 @@ export const collectionStore = {
     if (isCorrect) {
       card.history.correct++;
       // Add XP
-      const XP_PER_WIN = 10;
+      const xp = expAmount ?? 10;
       const oldLevel = card.level;
-      card.exp = Math.min(card.exp + XP_PER_WIN, LEVEL_THRESHOLDS.MAX);
+      card.exp = Math.min(card.exp + xp, LEVEL_THRESHOLDS.MAX);
       card.level = this.calculateLevel(card.exp);
 
       this.saveCollection(collection);
