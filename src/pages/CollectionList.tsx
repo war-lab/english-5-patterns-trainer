@@ -39,13 +39,13 @@ export default function CollectionList() {
       }}>
         <div style={{ fontWeight: 'bold', marginBottom: '8px', borderBottom: '1px solid var(--surface-border)', paddingBottom: '6px', color: 'var(--text-color)' }}>RARITY</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '6px 14px', alignItems: 'center' }}>
-          <span style={{ fontWeight: 'bold', color: '#FFD700', fontFamily: 'var(--font-pixel)', fontSize: '0.55rem', textShadow: '0 0 6px rgba(255, 215, 0, 0.4)' }}>SR</span>
+          <span style={{ fontWeight: 'bold', color: '#FFD700', fontFamily: 'var(--font-pixel)', fontSize: '0.7rem', textShadow: '0 0 6px rgba(255, 215, 0, 0.4)' }}>SR</span>
           <span>多文型 or 難関動詞</span>
 
-          <span style={{ fontWeight: 'bold', color: '#C0C0C0', fontFamily: 'var(--font-pixel)', fontSize: '0.55rem' }}>R</span>
+          <span style={{ fontWeight: 'bold', color: '#C0C0C0', fontFamily: 'var(--font-pixel)', fontSize: '0.7rem' }}>R</span>
           <span>3文型以上 or 注意動詞</span>
 
-          <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', fontFamily: 'var(--font-pixel)', fontSize: '0.55rem' }}>N</span>
+          <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', fontFamily: 'var(--font-pixel)', fontSize: '0.7rem' }}>N</span>
           <span>基本動詞</span>
         </div>
       </div>
@@ -97,7 +97,7 @@ export default function CollectionList() {
                 <>
                   <div style={{ fontWeight: 'bold', marginBottom: '4px', fontFamily: 'var(--font-pixel)', fontSize: '0.7rem' }}>{id}</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{data.meaning}</div>
-                  <div style={{ marginTop: 'auto', fontSize: '0.6rem', fontWeight: 'bold', color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', textShadow: '0 0 4px rgba(0, 204, 255, 0.3)' }}>
+                  <div style={{ marginTop: 'auto', fontSize: '0.7rem', fontWeight: 'bold', color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', textShadow: '0 0 4px rgba(0, 204, 255, 0.3)' }}>
                     Lv.{progress.level}
                   </div>
                 </>

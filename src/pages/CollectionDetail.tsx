@@ -39,7 +39,7 @@ export default function CollectionDetail() {
         transform: 'none'
       }}>
         <div style={{
-          fontSize: '0.6rem',
+          fontSize: '0.75rem',
           color: data.rarity === 'SR' ? '#FFD700' : data.rarity === 'R' ? '#C0C0C0' : 'var(--text-secondary)',
           textTransform: 'uppercase',
           fontFamily: 'var(--font-pixel)',
@@ -67,15 +67,15 @@ export default function CollectionDetail() {
           border: '1px solid var(--surface-border)'
         }}>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '0.6rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-pixel)' }}>LV</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-pixel)' }}>LV</div>
             <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', textShadow: '0 0 6px rgba(0, 204, 255, 0.3)' }}>{progress.level}</div>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '0.6rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-pixel)' }}>EXP</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-pixel)' }}>EXP</div>
             <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--accent-color)', fontFamily: 'var(--font-pixel)', textShadow: '0 0 6px rgba(255, 107, 157, 0.3)' }}>{progress.exp}</div>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '0.6rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-pixel)' }}>WIN</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-pixel)' }}>WIN</div>
             <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--primary-color)', fontFamily: 'var(--font-pixel)', textShadow: '0 0 6px rgba(0, 255, 136, 0.3)' }}>{progress.history.correct}</div>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function CollectionDetail() {
 
       {/* 例文リスト */}
       <h3 style={{ fontSize: '0.95rem', color: 'var(--secondary-color)' }}>
-        EXAMPLES <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.6rem' }}>({examples.length})</span>
+        EXAMPLES <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.75rem' }}>({examples.length})</span>
       </h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         {examples.map(ex => (
@@ -107,7 +107,7 @@ export default function CollectionDetail() {
           }}>
             <div>{ex.sentence}</div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-              Pattern: <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.55rem' }}>{ex.correctPattern}</span> | Level <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.55rem' }}>{ex.level}</span>
+              Pattern: <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.7rem' }}>{ex.correctPattern}</span> | Level <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.7rem' }}>{ex.level}</span>
             </div>
           </div>
         ))}

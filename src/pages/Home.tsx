@@ -51,7 +51,7 @@ export default function Home() {
           </Link>
         </div>
         <Link to="/scene" className="menu-item">
-          <h3 style={{ color: 'var(--warning-color)', textShadow: '0 0 8px rgba(255, 221, 0, 0.4)' }}>SCENE MODE <span style={{ fontSize: '0.6rem', color: 'var(--accent-color)' }}>★NEW</span></h3>
+          <h3 style={{ color: 'var(--warning-color)', textShadow: '0 0 8px rgba(255, 221, 0, 0.4)' }}>SCENE MODE <span style={{ fontSize: '0.7rem', color: 'var(--accent-color)' }}>★NEW</span></h3>
           <span>意味で見抜け</span>
         </Link>
         <Link to="/parse" className="menu-item">
@@ -107,7 +107,7 @@ export default function Home() {
                       borderBottom: `3px solid ${PATTERN_COLORS[p]}`,
                       boxShadow: `0 0 4px ${PATTERN_COLORS[p]}33`
                     }}>
-                      <div style={{ fontWeight: 'bold', color: PATTERN_COLORS[p], fontFamily: 'var(--font-pixel)', fontSize: '0.6rem', textShadow: `0 0 6px ${PATTERN_COLORS[p]}66` }}>{PATTERN_LABELS[p]}</div>
+                      <div style={{ fontWeight: 'bold', color: PATTERN_COLORS[p], fontFamily: 'var(--font-pixel)', fontSize: '0.75rem', textShadow: `0 0 6px ${PATTERN_COLORS[p]}66` }}>{PATTERN_LABELS[p]}</div>
                       <div style={{ fontWeight: 'bold', color: 'var(--text-color)', marginTop: '4px', fontSize: '1rem' }}>{rate}%</div>
                     </div>
                   );

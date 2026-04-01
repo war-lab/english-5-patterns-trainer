@@ -58,7 +58,7 @@ export default function Parse() {
     <div className="parse-container">
       <div className="nav-header">
         <Link to="/" className="nav-link">← BACK</Link>
-        <span style={{ fontWeight: 'bold', color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', fontSize: '0.65rem', textShadow: '0 0 6px rgba(0, 204, 255, 0.3)' }}>PARSE</span>
+        <span style={{ fontWeight: 'bold', color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', fontSize: '0.7rem', textShadow: '0 0 6px rgba(0, 204, 255, 0.3)' }}>PARSE</span>
       </div>
 
       <div className="card question-card" style={{ marginBottom: '16px' }}>

@@ -36,13 +36,13 @@ export const SCENE_TYPE_MAP: Record<Pattern, SceneType> = {
   5: 'transform',
 };
 
-/** 意味カテゴリのラベル定義 */
+/** 関係の骨格ラベル定義（主: 骨格、従: 意味） */
 export const SCENE_LABELS: Record<SceneType, { short: string; full: string }> = {
-  action:    { short: '動作だけ',       full: '主語が動いている／いるだけ。必須の対象なし' },
-  state:     { short: '状態・性質',     full: '主語がどんな状態か、何者かを表している' },
-  affect:    { short: '対象に作用',     full: '主語が何かに対して作用している' },
-  transfer:  { short: '渡す・与える',   full: '誰かに何かを渡している／与えている' },
-  transform: { short: '対象をどうする', full: '対象を変える・保つ・そう認識する' },
+  action:    { short: '主語が動く・起こる',   full: '主語が動く・起こるだけ。対象は必須でない' },
+  state:     { short: '主語の説明になる',     full: '主語がどんな状態か、何者かを説明している' },
+  affect:    { short: '対象にはたらく',       full: '主語の動作が対象にはたらいている' },
+  transfer:  { short: '相手と物の2つへ',     full: '相手と物の2つに向かっている（渡す・教える・見せる）' },
+  transform: { short: '対象に説明がつく',     full: '対象にさらに説明（状態・名前・認識）がつく' },
 };
 
 /** SceneType → Pattern の逆引き */
@@ -54,11 +54,11 @@ export const SCENE_TO_PATTERN: Record<SceneType, Pattern> = {
   transform: 5,
 };
 
-/** 意味カテゴリのASCIIアイコン */
+/** 関係の骨格図アイコン */
 export const SCENE_ICONS: Record<SceneType, string> = {
-  action:    '>>',
-  state:     '==',
-  affect:    '->',
-  transfer:  '=>',
-  transform: '<>',
+  action:    'S\u2500V',
+  state:     'S=C',
+  affect:    'S\u2192O',
+  transfer:  'S\u2192O+O',
+  transform: 'S\u2192O=C',
 };

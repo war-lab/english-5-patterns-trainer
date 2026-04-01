@@ -167,7 +167,7 @@ export default function VerbFocusGame() {
           <button onClick={() => navigate('/')} className="nav-link">← HOME</button>
         </div>
         <h2 style={{ textAlign: 'center', marginBottom: '12px', fontFamily: 'var(--font-pixel)', fontSize: '0.75rem', color: 'var(--secondary-color)', textShadow: '0 0 6px rgba(0, 204, 255, 0.3)' }}>VERB FOCUS</h2>
-        <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '16px', fontSize: '0.85rem' }}>
+        <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '16px', fontSize: '0.85rem', fontFamily: 'var(--font-jp)' }}>
           1つの動詞で全文型を体感せよ
         </p>
         <VerbFocusSelect verbs={multiPatternVerbs} onSelect={handleSelectVerb} />
@@ -240,7 +240,7 @@ export default function VerbFocusGame() {
               style={{ borderColor: PATTERN_COLORS[p], color: PATTERN_COLORS[p] }}
             >
               {PATTERN_LABELS[p]}
-              <div style={{ fontSize: '0.6rem', opacity: 0.7, fontFamily: 'var(--font-pixel)' }}>[{p}]</div>
+              <div style={{ fontSize: '0.7rem', opacity: 0.7, fontFamily: 'var(--font-pixel)' }}>[{p}]</div>
             </button>
           ))}
         </div>
@@ -310,7 +310,7 @@ export default function VerbFocusGame() {
             style={{ marginTop: '14px', width: '100%' }}
           >
             {session.currentIndex + 1 >= session.questions.length ? 'RESULT' : 'NEXT →'}
-            <span style={{ fontSize: '0.6rem', opacity: 0.7, marginLeft: '8px', fontFamily: 'var(--font-pixel)' }}>[Enter]</span>
+            <span style={{ fontSize: '0.7rem', opacity: 0.7, marginLeft: '8px', fontFamily: 'var(--font-pixel)' }}>[Enter]</span>
           </button>
         </div>
       )}

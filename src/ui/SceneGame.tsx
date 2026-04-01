@@ -322,14 +322,15 @@ function ScanPhase({ onSelect }: { onSelect: (s: SceneType) => void }) {
           textShadow: '0 0 8px rgba(255, 221, 0, 0.4)',
           letterSpacing: '0.15em',
         }}>
-          WHAT'S HAPPENING?
+          WHAT'S THE STRUCTURE?
         </div>
         <div style={{
+          fontFamily: 'var(--font-jp)',
           fontSize: '0.85rem',
           color: 'var(--text-secondary)',
           marginTop: '2px',
         }}>
-          何が起きてる？
+          この文の関係の骨組みは？
         </div>
       </div>
       <div className="scene-card-list">
@@ -419,7 +420,7 @@ function RecoverPhase({
             onClick={() => onSelect(p)}
           >
             <div>{PATTERN_LABELS[p]}</div>
-            <div style={{ fontSize: '0.5rem', fontFamily: 'var(--font-pixel)', opacity: 0.6 }}>[{p}]</div>
+            <div style={{ fontSize: '0.7rem', fontFamily: 'var(--font-pixel)', opacity: 0.6 }}>[{p}]</div>
           </button>
         ))}
       </div>
@@ -518,8 +519,8 @@ function ResultPhase({
           {question.sceneDescription && (
             <div className="scene-hint">「{question.sceneDescription}」</div>
           )}
-          <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '8px' }}>
-            <span style={{ color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', fontSize: '0.6rem' }}>HINT: </span>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '8px' }}>
+            <span style={{ color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', fontSize: '0.7rem' }}>HINT: </span>
             {question.explanation.overall}
           </div>
         </div>
@@ -529,7 +530,7 @@ function ResultPhase({
       {resultType === 'wrong' && (
         <div>
           <div style={{ marginBottom: '8px' }}>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 'bold', marginBottom: '4px' }}>意味</div>
+            <div style={{ fontFamily: 'var(--font-jp)', fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 'bold', marginBottom: '4px' }}>骨組み</div>
             <div className="answer-compare">
               <span className="answer-compare-label">あなた:</span>
               <span className="answer-compare-wrong">{SCENE_ICONS[chosenScene]} {SCENE_LABELS[chosenScene].short}</span>
@@ -540,7 +541,7 @@ function ResultPhase({
             </div>
           </div>
           <div style={{ marginBottom: '12px' }}>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 'bold', marginBottom: '4px' }}>文型</div>
+            <div style={{ fontFamily: 'var(--font-jp)', fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 'bold', marginBottom: '4px' }}>文型</div>
             <div className="answer-compare">
               <span className="answer-compare-label">あなた:</span>
               <span className="answer-compare-wrong">{PATTERN_LABELS[chosenPattern!]}</span>
@@ -553,13 +554,13 @@ function ResultPhase({
           {question.sceneDescription && (
             <div className="scene-hint">「{question.sceneDescription}」</div>
           )}
-          <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '8px' }}>
-            <span style={{ color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', fontSize: '0.6rem' }}>HINT: </span>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '8px' }}>
+            <span style={{ color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', fontSize: '0.7rem' }}>HINT: </span>
             {question.explanation.overall}
           </div>
           {question.explanation.trap && (
-            <div style={{ fontSize: '0.85rem', color: 'var(--warning-color)', marginTop: '4px' }}>
-              <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.6rem' }}>TRAP: </span>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.85rem', color: 'var(--warning-color)', marginTop: '4px' }}>
+              <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.7rem' }}>TRAP: </span>
               {question.explanation.trap}
             </div>
           )}

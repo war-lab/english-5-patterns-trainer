@@ -51,7 +51,7 @@ export default function VerbFocusSummary({
         }}
       >
         <div style={{
-          fontSize: '0.55rem',
+          fontSize: '0.7rem',
           color: rarity === 'SR' ? '#FFD700' : rarity === 'R' ? '#C0C0C0' : 'var(--text-secondary)',
           textTransform: 'uppercase',
           fontFamily: 'var(--font-pixel)',
@@ -84,7 +84,7 @@ export default function VerbFocusSummary({
       >
         {isPerfect && (
           <div style={{
-            fontSize: '0.65rem',
+            fontSize: '0.7rem',
             marginBottom: '8px',
             color: 'var(--warning-color)',
             fontFamily: 'var(--font-pixel)',
@@ -128,7 +128,7 @@ export default function VerbFocusSummary({
               <span style={{
                 flexShrink: 0,
                 padding: '2px 8px',
-                fontSize: '0.6rem',
+                fontSize: '0.7rem',
                 fontFamily: 'var(--font-pixel)',
                 fontWeight: 'bold',
                 background: patternMap[p] === 'correct' ? PATTERN_COLORS[p] :
@@ -158,10 +158,10 @@ export default function VerbFocusSummary({
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: '0.9rem', color: 'var(--text-color)' }}>{r.question.sentence}</div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                正解: <span style={{ color: PATTERN_COLORS[r.question.correctPattern], fontWeight: 'bold', fontFamily: 'var(--font-pixel)', fontSize: '0.55rem' }}>{PATTERN_LABELS[r.question.correctPattern]}</span>
+                正解: <span style={{ color: PATTERN_COLORS[r.question.correctPattern], fontWeight: 'bold', fontFamily: 'var(--font-pixel)', fontSize: '0.7rem' }}>{PATTERN_LABELS[r.question.correctPattern]}</span>
                 {!r.isCorrect && (
                   <span style={{ color: 'var(--error-color)', marginLeft: '8px' }}>
-                    回答: <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.55rem' }}>{PATTERN_LABELS[r.chosenPattern]}</span>
+                    回答: <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.7rem' }}>{PATTERN_LABELS[r.chosenPattern]}</span>
                   </span>
                 )}
               </div>
