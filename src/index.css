@@ -22,9 +22,14 @@
   --box-shadow-hover: 0 0 16px rgba(0, 255, 136, 0.18);
   --transition-speed: 0.15s;
 
-  /* フォント */
-  --font-pixel: 'Press Start 2P', monospace;
+  /* フォント — 3層設計
+     --font-pixel : 英数字見出し・骨格図・スコア（Press Start 2P、非対応グリフは M PLUS 1 Code で補完）
+     --font-jp    : 日本語ラベル・ボタン・カード名（DotGothic16、ピクセル感＋日本語可読性）
+     --font-body  : 補助文・ヒント・説明・細かいUI（M PLUS 1 Code、等幅で安定した可読性）
+  */
+  --font-pixel: 'Press Start 2P', 'M PLUS 1 Code', monospace;
   --font-jp: 'DotGothic16', 'Hiragino Kaku Gothic ProN', sans-serif;
+  --font-body: 'M PLUS 1 Code', 'DotGothic16', monospace;
 
   /* グロー */
   --glow-green: 0 0 8px rgba(0, 255, 136, 0.4), 0 0 24px rgba(0, 255, 136, 0.15);
@@ -884,7 +889,7 @@ button {
 }
 
 .pattern-bar-label {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 700;
   font-family: var(--font-pixel);
   color: #444466;
@@ -894,7 +899,7 @@ button {
 
 .rarity-badge {
   padding: 2px 8px;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: bold;
   font-family: var(--font-pixel);
   border: 1px solid;
@@ -977,7 +982,7 @@ button {
 
 .retro-title-sub {
   font-family: var(--font-pixel);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: var(--secondary-color);
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -1085,7 +1090,7 @@ button {
   }
 
   .retro-title-sub {
-    font-size: 0.5rem;
+    font-size: 0.6rem;
   }
 
   .verb-select-name {
@@ -1098,7 +1103,12 @@ button {
   }
 
   .scene-card-name {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
+  }
+
+  .scene-card-icon {
+    min-width: 76px;
+    font-size: 0.875rem;
   }
 
   .phase-indicator {
@@ -1106,7 +1116,7 @@ button {
   }
 
   .phase-label {
-    font-size: 0.45rem;
+    font-size: 0.6rem;
   }
 }
 
@@ -1195,7 +1205,7 @@ button {
 
 .phase-label {
   font-family: var(--font-pixel);
-  font-size: 0.55rem;
+  font-size: 0.7rem;
   margin-top: 4px;
   letter-spacing: 0.1em;
   color: var(--text-secondary);
@@ -1212,7 +1222,7 @@ button {
   align-items: flex-end;
   gap: 2px;
   font-family: var(--font-pixel);
-  font-size: 0.45rem;
+  font-size: 0.7rem;
   color: var(--secondary-color);
 }
 
@@ -1251,22 +1261,27 @@ button {
 
 .scene-card-icon {
   font-family: var(--font-pixel);
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: var(--warning-color);
-  min-width: 28px;
-  text-align: center;
+  min-width: 88px;
+  text-align: left;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 4px rgba(255, 221, 0, 0.25);
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  font-smooth: never;
 }
 
 .scene-card-name {
-  font-weight: bold;
-  font-size: 0.95rem;
-  color: var(--text-color);
+  font-family: var(--font-jp);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
   flex: 1;
 }
 
 .scene-card-key {
   font-family: var(--font-pixel);
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   color: #555577;
 }
 
@@ -1299,17 +1314,22 @@ button {
 
 .scene-locked-badge {
   font-family: var(--font-pixel);
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   text-shadow: 0 0 4px currentColor;
 }
 
 .scene-locked-icon {
   font-family: var(--font-pixel);
-  font-size: 0.65rem;
+  font-size: 0.875rem;
   color: var(--warning-color);
+  letter-spacing: 0.06em;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  font-smooth: never;
 }
 
 .scene-locked-name {
+  font-family: var(--font-jp);
   color: var(--text-color);
   font-weight: bold;
 }
@@ -1357,6 +1377,7 @@ button {
 }
 
 .recover-sub {
+  font-family: var(--font-body);
   font-size: 0.85rem;
   color: var(--text-secondary);
   text-align: center;
@@ -1365,6 +1386,7 @@ button {
 
 /* フィードバック共通パーツ */
 .scene-hint {
+  font-family: var(--font-body);
   font-size: 0.9rem;
   color: var(--text-secondary);
   font-style: italic;

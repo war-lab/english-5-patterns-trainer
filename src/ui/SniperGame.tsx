@@ -194,7 +194,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
         <button onClick={() => deckFilter ? navigate(-1) : navigate('/')} className="nav-link">
           ← BACK [Esc]
         </button>
-        <span style={{ fontWeight: 'bold', color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', fontSize: '0.65rem', textShadow: '0 0 6px rgba(0, 204, 255, 0.3)' }}>
+        <span style={{ fontWeight: 'bold', color: 'var(--secondary-color)', fontFamily: 'var(--font-pixel)', fontSize: '0.7rem', textShadow: '0 0 6px rgba(0, 204, 255, 0.3)' }}>
           {deckFilter ? `DRILL: ${deckFilter}` : (mode === 'sniper' ? 'SNIPER' : 'REVIEW')}
         </span>
       </div>
@@ -217,7 +217,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
         </div>
         <div style={{
           textAlign: 'right',
-          fontSize: '0.6rem',
+          fontSize: '0.75rem',
           fontFamily: 'var(--font-pixel)',
           color: timerColor,
           marginTop: '4px',
@@ -288,7 +288,7 @@ export default function SniperGame({ mode }: SniperGameProps) {
             style={{ borderColor: PATTERN_COLORS[p], color: PATTERN_COLORS[p] }}
           >
             {PATTERN_LABELS[p]}
-            <div style={{ fontSize: '0.6rem', opacity: 0.7, fontFamily: 'var(--font-pixel)' }}>[{p}]</div>
+            <div style={{ fontSize: '0.7rem', opacity: 0.7, fontFamily: 'var(--font-pixel)' }}>[{p}]</div>
           </button>
         ))}
       </div>
